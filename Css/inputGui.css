@@ -1,0 +1,29 @@
+.buttonSection {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    margin-bottom: 1em;
+}
+
+.fixed {
+    top: 80vh;
+}
+
+.buttonSectionButtonText {
+    background-color: white;
+    border-radius: 1em;
+    min-width: 60px;
+    padding: 1em;
+    margin: 0.5em;   
+}
+
+.buttonSectionButton {
+    flex-shrink: 1;
+    flex-grow: 1;
+}
