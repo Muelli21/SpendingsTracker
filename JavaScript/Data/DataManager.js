@@ -159,7 +159,7 @@ function callbackSaveSpendingMonth(database, spendingMonth) {
 
     console.log(JSONspendingMonth);
 
-    let request = objectStore.put(JSONspendingMonth);
+    let request = objectStore.put(JSONspendingMonth.key, JSONspendingMonth);
     request.onsuccess = function (event) {
         console.log("The month " + spendingMonth.getMonth() + "/" + spendingMonth.getYear() + " has been saved successfully!");
     }

@@ -1,6 +1,6 @@
 class SpendingMonth {
     constructor(month, year) {
-        this.key = month + "" + year;
+        this.key = Number(month + "" + year);
         this.month = month;
         this.year = year;
         this.spendings = [];
@@ -36,9 +36,10 @@ class SpendingMonth {
     getTotalExpenses() {
         let sum = 0;
         for (let spending of this.spendings) {
-            sum += spending.getCost();
+            sum = sum + spending.getCost();
+            console.log(sum);
         }
-        return sum;
+        return Number(sum);
     };
 
     getRemainingBudget() {

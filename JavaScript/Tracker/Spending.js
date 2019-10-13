@@ -19,7 +19,7 @@ class Spending {
     };
 
     getCost() {
-        return this.cost;
+        return Number(this.cost);
     };
 
     getName() {

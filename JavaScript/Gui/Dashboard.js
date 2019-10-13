@@ -47,6 +47,7 @@ class Dashboard {
         let budgetOverviewContainer = createHTMLElement(label, "div", "flexContainer");
         let budgetMonitor = createTextElement(budgetOverviewContainer, budget + "€", "budgetMonitor one-half");
         let savingsMonitor = createTextElement(budgetOverviewContainer, savings + "€", "savingsMonitor one-half");
+        console.log(expenses);
     }
 
     setSpendingButton() {
