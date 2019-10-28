@@ -47,7 +47,6 @@ class Dashboard {
         let budgetOverviewContainer = createHTMLElement(label, "div", "flexContainer");
         let budgetMonitor = createTextElement(budgetOverviewContainer, budget + "€", "budgetMonitor one-half");
         let savingsMonitor = createTextElement(budgetOverviewContainer, savings + "€", "savingsMonitor one-half");
-        console.log(expenses);
     }
 
     setSpendingButton() {
@@ -65,7 +64,22 @@ class Dashboard {
     }
 
     openStatistics() {
+        let statisticsDiv = document.getElementById("statistics");
+        let spendingsOverviewContainer = createHTMLElement(statisticsDiv,"div", "spendingsOverviewDiv");
 
+        let currentSpendings = this.spendingMonth.getSpendings();
+
+        for(let spending of currentSpendings) {
+
+            let spendingCategory = spending.getType();
+
+            let spendingElement = createHTMLElement(spendingsOverviewContainer, "div", "spendingElement");
+            let spendingElementDiv = createHTMLElement(spendingElement, "div", "spendingElementDiv");
+            let spendingElementIcon = createHTMLElement(spendingElementDiv,"img", "spendingElementIcon").src = spendingCategory.iconURL;
+
+            createTextElement(spendingElementDiv, spending.getName(), "spendingElementText");
+            createTextElement(spendingElementDiv, spending.getCost() + " Euro", "spendingElementText");
+        }
     }
 
     closeStatistics() {

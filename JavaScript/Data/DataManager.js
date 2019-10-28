@@ -13,9 +13,13 @@ function loadSpendingMonths() {
     let request = window.indexedDB.open(name, version);
     let database = null;
 
-    request.onupgradeneeded = function(event) {
+    request.onupgradeneeded = function (event) {
         database = event.target.result;
-        database.createObjectStore(userName, { keyPath: "key" });
+        let objectStore = database.createObjectStore(userName, { keyPath: "key" });
+        objectStore.createIndex("budget", "budget", { unique: false });
+        objectStore.createIndex("month", "month", { unique: false });
+        objectStore.createIndex("spendings", "spendings", { unique: false });
+        objectStore.createIndex("year", "year", { unique: false });
         console.log("upgradeneeded");
     }
 
@@ -87,27 +91,20 @@ function callbackLoadSpendingMonths(database) {
 
     let userName = defaultUserName;
     let transaction = database.transaction(userName, "readwrite");
-    let loadedMonths = [];
 
     let objectStore = transaction.objectStore(userName);
-        objectStore.openCursor().onsuccess = function (event) {
-            let cursor = event.target.result;
-    
-            if (cursor) {
-                let data = cursor.value;
-                loadedMonths.push(JSON.parse(data));
-                cursor.continue();
-            }
-        }
-    
-        for (let monthObject of loadedMonths) {
-            let month = monthObject.month;
-            let year = monthObject.year;
-            let budget = monthObject.budget;
-            let spendingObjects = monthObject.spendings;
+    objectStore.openCursor().onsuccess = function (event) {
+        let cursor = event.target.result;
+
+        if (cursor) {
+            let data = cursor.value;
+            let month = data.month;
+            let year = data.year;
+            let budget = data.budget;
+            let spendingObjects = data.spendings;
             let spendingMonth = new SpendingMonth(month, year);
             spendingMonth.setBudget(budget);
-    
+
             for (let spendingObject of spendingObjects) {
                 let type = spendingObject.type;
                 let name = spendingObject.name;
@@ -117,12 +114,14 @@ function callbackLoadSpendingMonths(database) {
                 spending.setTimestamp(timestamp);
                 spendingMonth.addSpending(spending);
             }
-        }
 
-        login();
+            cursor.continue();
+        }
+    }
 
     transaction.oncomplete = function (event) {
-        console.log("A connection to indexedDB has successfully been established!");     
+        console.log("A connection to indexedDB has successfully been established!");
+        login();
     }
 }
 
@@ -132,34 +131,30 @@ function callbackSaveSpendingMonths(database) {
     let transaction = database.transaction(userName, "readwrite");
 
     let objectStore = transaction.objectStore(userName, { keyPath: "key" });
-        let spendingMonths = allSpendingMonths;
+    let spendingMonths = allSpendingMonths;
 
-        for (let i = 0; i < spendingMonths.length; i++) {
-            let spendingMonth = spendingMonths[i];
-            let JSONspendingMonth = JSON.stringify(spendingMonth);
+    for (let i = 0; i < spendingMonths.length; i++) {
+        let spendingMonth = spendingMonths[i];
+        let JSONspendingMonth = JSON.stringify(spendingMonth);
 
-            let request = objectStore.put(JSONspendingMonth);
-            request.onsuccess = function (event) {
-                console.log("The month " + spendingMonth.getMonth() + "/" + spendingMonth.getYear() + " has been saved successfully!");
-            }
+        let request = objectStore.put(JSONspendingMonth);
+        request.onsuccess = function (event) {
+            console.log("The month " + spendingMonth.getMonth() + "/" + spendingMonth.getYear() + " has been saved successfully!");
         }
+    }
 
     transaction.oncomplete = function (event) {
-        console.log("A connection to indexedDB has successfully been established!");   
-    } 
+        console.log("A connection to indexedDB has successfully been established!");
+    }
 }
 
 function callbackSaveSpendingMonth(database, spendingMonth) {
 
     let userName = defaultUserName;
     let transaction = database.transaction(userName, "readwrite");
-
     let objectStore = transaction.objectStore(userName, { keyPath: "key" });
-    let JSONspendingMonth = JSON.stringify(spendingMonth);
 
-    console.log(JSONspendingMonth);
-
-    let request = objectStore.put(JSONspendingMonth.key, JSONspendingMonth);
+    let request = objectStore.put(spendingMonth);
     request.onsuccess = function (event) {
         console.log("The month " + spendingMonth.getMonth() + "/" + spendingMonth.getYear() + " has been saved successfully!");
     }

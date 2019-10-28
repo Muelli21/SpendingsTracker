@@ -10,6 +10,7 @@ class SpendingMonth {
 
     setBudget(budget) {
         this.budget = budget;
+        saveSpendingMonth(this);
     };
 
     addSpending(spending) {
@@ -37,7 +38,6 @@ class SpendingMonth {
         let sum = 0;
         for (let spending of this.spendings) {
             sum = sum + spending.getCost();
-            console.log(sum);
         }
         return Number(sum);
     };

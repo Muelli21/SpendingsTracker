@@ -154,7 +154,8 @@ class InputGui {
             let spending = new Spending(spendingCategory, cost, name);
             spendingMonth.addSpending(spending);
             console.log("The spending " + name + " with a cost of " + cost + " was successfully added to the current month");
-
+            inputGui.close();
+            dashboard.open();
         });
         
         toggleDisplayVisibility(this.inputGuiElement, true);

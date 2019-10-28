@@ -1,0 +1,41 @@
+#statistics {
+    position: absolute;
+    top: 100vh;
+}
+
+.spendingsOverviewDiv {
+    min-width: 200px;
+    width: 100%;
+    position: relative;
+}
+
+.spendingElement {
+    position: relative;
+    width: 100vw;
+    padding-bottom: 1em;
+}
+
+.spendingElementDiv {
+    position: relative;
+    background-color: white;
+    border-radius: 1em;
+    width: 70%;
+    height: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.spendingElementIcon {
+    position: absolute;
+    left: 10px;
+    height: 30px;
+    width: auto;
+    margin: 1em;
+}
+
+.spendingElementText {
+    position: relative;
+    left: calc(50px + 2em);
+    line-height: 1px;
+}
+
