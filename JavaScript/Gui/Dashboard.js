@@ -2,6 +2,8 @@ class Dashboard {
     constructor(spendingMonth) {
         this.spendingMonth = spendingMonth;
         this.dashboardElement = document.getElementById("dashboard");
+        this.statisticsElement = document.getElementById("statistics");
+        this.displayingStatistics = false;
         dashboard = this;
     }
 
@@ -36,7 +38,7 @@ class Dashboard {
         let savings = budget - expenses;
 
         let budgetOverviewDiv = document.getElementById("budgetOverviewDiv");
-        let budgetButton = createButtonElement(budgetOverviewDiv, "budgetButton", "budgetButton", function() {
+        let budgetButton = createButtonElement(budgetOverviewDiv, "budgetButton", "budgetButton", function () {
             inputGui.openBudgetInput();
         });
 
@@ -58,31 +60,68 @@ class Dashboard {
 
     setStatisticsButton() {
         let statisticsButtonDiv = document.getElementById("statisticsButtonDiv");
-        createTextButtonElement(statisticsButtonDiv, "view statistics", "statisticsButton", function () {
-            dashboard.openStatistics();
+        createTextButtonElement(statisticsButtonDiv, "toggle statistics", "statisticsButton", function () {
+
+            if (this.displayingStatistics) {
+                dashboard.closeStatistics();
+                this.displayingStatistics = false;
+            } else {
+                dashboard.openStatistics();
+                this.displayingStatistics = true;
+            }
         });
     }
 
     openStatistics() {
         let statisticsDiv = document.getElementById("statistics");
-        let spendingsOverviewContainer = createHTMLElement(statisticsDiv,"div", "spendingsOverviewDiv");
 
         let currentSpendings = this.spendingMonth.getSpendings();
+        let spendingsTable = createHTMLElement(statisticsDiv, "table", "spendingsTable");
 
-        for(let spending of currentSpendings) {
+        let spendingsTableRow = createHTMLElement(spendingsTable, "tr", "spendingsTableRow");
+
+        let spendingsTableHeadline1 = createHTMLElement(spendingsTableRow, "th", "spendingsTableHeadline");
+        spendingsTableHeadline1.innerHTML = "Category";
+
+        let spendingsTableHeadline2 = createHTMLElement(spendingsTableRow, "th", "spendingsTableHeadline");
+        spendingsTableHeadline2.innerHTML = "Name";
+
+        let spendingsTableHeadline3 = createHTMLElement(spendingsTableRow, "th", "spendingsTableHeadline");
+        spendingsTableHeadline3.innerHTML = "Price";
+
+        let spendingsTableHeadline4 = createHTMLElement(spendingsTableRow, "th", "spendingsTableHeadline");
+        spendingsTableHeadline4.innerHTML = monthIndexToString(this.spendingMonth.getMonth() -1);
+
+        for (let spending of currentSpendings) {
 
             let spendingCategory = spending.getType();
 
-            let spendingElement = createHTMLElement(spendingsOverviewContainer, "div", "spendingElement");
-            let spendingElementDiv = createHTMLElement(spendingElement, "div", "spendingElementDiv");
-            let spendingElementIcon = createHTMLElement(spendingElementDiv,"img", "spendingElementIcon").src = spendingCategory.iconURL;
+            let spendingEntry = createHTMLElement(spendingsTable, "tr", "spendingsTableRow");
 
-            createTextElement(spendingElementDiv, spending.getName(), "spendingElementText");
-            createTextElement(spendingElementDiv, spending.getCost() + " Euro", "spendingElementText");
+            let spendingEntryCategory = createHTMLElement(spendingEntry, "td", "spendingEntryCenter");
+
+            let spendingEntryIcon = createHTMLElement(spendingEntryCategory, "img", "spendingEntryIcon").src = spendingCategory.iconURL;
+
+            let spendingEntryName = createHTMLElement(spendingEntry, "td", "spendingEntry");
+            spendingEntryName.innerHTML = spending.getName();
+
+            let spendingEntryPrice = createHTMLElement(spendingEntry, "td", "spendingEntry");
+            spendingEntryPrice.innerHTML = spending.getCost() + "€";
+
+            let spendingEntryDate = createHTMLElement(spendingEntry, "td", "spendingEntryCenter");
+            let spendingDate = new Date();
+            spendingDate.setTime(spending.getTimeStamp());
+            spendingEntryDate.innerHTML = spendingDate.getDate();
         }
+
+        printCategoryCharts();
+    }
+
+    clearStatistics() {
+        clearElement(this.statisticsElement);
     }
 
     closeStatistics() {
-
+        this.clearStatistics();
     }
 }

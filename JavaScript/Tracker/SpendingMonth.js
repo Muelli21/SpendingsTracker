@@ -11,24 +11,24 @@ class SpendingMonth {
     setBudget(budget) {
         this.budget = budget;
         saveSpendingMonth(this);
-    };
+    }
 
     addSpending(spending) {
         this.spendings.push(spending);
         saveSpendingMonth(this);
-    };
+    }
 
     getSpendings() {
         return this.spendings;
-    };
+    }
 
     getMonth() {
         return this.month;
-    };
+    }
 
     getYear() {
         return this.year;
-    };
+    }
 
     getBudget() {
         return this.budget;
@@ -40,9 +40,9 @@ class SpendingMonth {
             sum = sum + spending.getCost();
         }
         return Number(sum);
-    };
+    }
 
     getRemainingBudget() {
         return this.budget - this.getTotalExpenses();
-    };
+    }
 }

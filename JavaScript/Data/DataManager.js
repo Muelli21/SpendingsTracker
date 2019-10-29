@@ -35,32 +35,6 @@ function loadSpendingMonths() {
     }
 }
 
-function saveSpendingMonths() {
-
-    let name = defaultUserName;
-    let version = appVersion;
-
-    if (!window.indexedDB) {
-        window.alert("The browser does not support IndexedDB, which will probably cause some inconveniences!");
-        browserSupport = false;
-        return;
-    }
-
-    let request = window.indexedDB.open(name, version);
-    let database = null;
-
-    request.onerror = function (event) {
-        window.alert("It seems that you have not allowed this website to create a database!");
-        console.log("Database error: " + event.target.errorCode);
-    }
-
-    request.onsuccess = function () {
-        database = request.result;
-        console.log("The connections to the indexedDB database has been established!");
-        callbackSaveSpendingMonths(database);
-    }
-}
-
 function saveSpendingMonth(spendingMonth) {
 
     let name = defaultUserName;
@@ -107,10 +81,11 @@ function callbackLoadSpendingMonths(database) {
 
             for (let spendingObject of spendingObjects) {
                 let type = spendingObject.type;
+                let spendingCategory = getSpendingCategoryByName(type.name);
                 let name = spendingObject.name;
                 let cost = spendingObject.cost;
                 let timestamp = spendingObject.timestamp;
-                let spending = new Spending(type, cost, name);
+                let spending = new Spending(spendingCategory, cost, name);
                 spending.setTimestamp(timestamp);
                 spendingMonth.addSpending(spending);
             }
@@ -122,29 +97,6 @@ function callbackLoadSpendingMonths(database) {
     transaction.oncomplete = function (event) {
         console.log("A connection to indexedDB has successfully been established!");
         login();
-    }
-}
-
-function callbackSaveSpendingMonths(database) {
-
-    let userName = defaultUserName;
-    let transaction = database.transaction(userName, "readwrite");
-
-    let objectStore = transaction.objectStore(userName, { keyPath: "key" });
-    let spendingMonths = allSpendingMonths;
-
-    for (let i = 0; i < spendingMonths.length; i++) {
-        let spendingMonth = spendingMonths[i];
-        let JSONspendingMonth = JSON.stringify(spendingMonth);
-
-        let request = objectStore.put(JSONspendingMonth);
-        request.onsuccess = function (event) {
-            console.log("The month " + spendingMonth.getMonth() + "/" + spendingMonth.getYear() + " has been saved successfully!");
-        }
-    }
-
-    transaction.oncomplete = function (event) {
-        console.log("A connection to indexedDB has successfully been established!");
     }
 }
 

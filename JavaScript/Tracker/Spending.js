@@ -8,22 +8,22 @@ class Spending {
 
     setTimestamp(timestamp) {
         this.timestamp = timestamp;
-    };
+    }
 
     getTimeStamp() {
         return this.timestamp;
-    };
+    }
 
     getType() {
         return this.type;
-    };
+    }
 
     getCost() {
         return Number(this.cost);
-    };
+    }
 
     getName() {
         return this.name;
-    };
+    }
 }
 
