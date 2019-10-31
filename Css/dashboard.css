@@ -94,6 +94,13 @@
     width: 0%;
 }
 
+.resetButtonDiv {
+    text-align: center;
+    background-color: rgba(255, 111, 92, 0.418);    
+    padding: 1em;
+    width: 100%;
+}
+
 
 
 

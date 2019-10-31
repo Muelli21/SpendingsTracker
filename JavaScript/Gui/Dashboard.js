@@ -58,6 +58,14 @@ class Dashboard {
         });
     }
 
+    setResetButton() {
+        let statisticsDiv = document.getElementById("statistics");
+        let resetButtonDiv = createHTMLElement(statisticsDiv, "div", "resetButtonDiv");
+        createTextButtonElement(resetButtonDiv, "reset", "resetButton", function () {
+            inputGui.openResetInput();
+        });
+    }
+
     setStatisticsButton() {
         let statisticsButtonDiv = document.getElementById("statisticsButtonDiv");
         createTextButtonElement(statisticsButtonDiv, "toggle statistics", "statisticsButton", function () {
@@ -74,6 +82,9 @@ class Dashboard {
 
     openStatistics() {
         let statisticsDiv = document.getElementById("statistics");
+        let statisticsSection = document.getElementById("statisticsSection");
+        $("html, body").animate({ scrollTop: statisticsSection.offsetTop }, "slow");
+
 
         let currentSpendings = this.spendingMonth.getSpendings();
         let spendingsTable = createHTMLElement(statisticsDiv, "table", "spendingsTable");
@@ -115,6 +126,7 @@ class Dashboard {
         }
 
         printCategoryCharts();
+        this.setResetButton();
     }
 
     clearStatistics() {

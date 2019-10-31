@@ -116,7 +116,7 @@ class InputGui {
 
         let imageDiv = createHTMLElement(inputContainer, "div", "spendingInputCategoryDiv");
         createHTMLElement(imageDiv,"img", "spendingInputImage").src = spendingCategory.getIconUrl();
-        createTextElement(imageDiv, spendingCategory.getName(), "spendingInputText");
+        createTextElement(imageDiv, spendingCategory.getName(), "inputText");
     
         let formDiv = createHTMLElement(inputContainer, "div", "formDiv");
         let costInputElement = createHTMLElement(formDiv,"input", "inputGuiInput");
@@ -158,6 +158,54 @@ class InputGui {
             dashboard.open();
         });
         
+        toggleDisplayVisibility(this.inputGuiElement, true);
+    }
+
+    openResetInput() {
+
+        this.clear();
+
+        let inputContainer = createHTMLElement(this.inputGuiElement, "div", "inputContainer");
+
+        let imageDiv = createHTMLElement(inputContainer, "div", "spendingInputCategoryDiv");
+        createHTMLElement(imageDiv,"img", "spendingInputImage").src = "./Resources/Icon_2.png";
+        createTextElement(imageDiv, "Reset", "inputText");
+
+        let formDiv = createHTMLElement(inputContainer, "div", "formDiv");
+
+        let resetInputElement = createHTMLElement(formDiv,"input", "inputGuiInput");
+        resetInputElement.setAttribute("type", "text");
+        resetInputElement.placeholder = "type 'reset";
+
+        let errorTextElement = createTextElement(formDiv, "Please fill out the form and press 'submit'!");
+
+        this.setButton("cancel", true, function() {
+            inputGui.close();
+            dashboard.open();
+        });
+
+        this.setButton("reset", true, function() {
+    
+            let reset = resetInputElement.value;
+    
+            if (reset == "") {
+                updateTextElement(errorTextElement, "The input field has to be filled out!!!")
+                return;
+            }
+
+            if (reset != "reset") {
+                console.log("Please confirm the reset by typing in 'reset'!");
+                return;
+            }
+    
+            let spendingMonth = dashboard.getSpendingMonth();
+            spendingMonth.setBudget(0);
+            spendingMonth.getSpendings().clear();
+            console.log("The current month was resetted!");
+            inputGui.close();
+            dashboard.open();
+        });
+
         toggleDisplayVisibility(this.inputGuiElement, true);
     }
 }

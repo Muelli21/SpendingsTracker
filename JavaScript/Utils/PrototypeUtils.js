@@ -7,3 +7,15 @@ Date.prototype.getDDMMYYYYString = function() {
     let yyyy = date.getFullYear();
     return dd +"/"+mm+"/"+yyyy;
 }
+
+Array.prototype.clear = function() {
+    this.length = 0;
+};
+
+Array.prototype.remove = function(element) {
+    for (let i = this.length; i--;) {
+        if (this[i] === element) {
+            this.splice(i, 1);
+        }
+    }
+};
