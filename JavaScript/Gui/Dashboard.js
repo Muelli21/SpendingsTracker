@@ -21,6 +21,9 @@ class Dashboard {
         clearElement(spendingButtonDiv);
         clearElement(statisticsButtonDiv);
         clearElement(statistics);
+
+        let statisticsSection = document.getElementById("statisticsSection");
+        toggleDisplayVisibility(statisticsSection, false);
     }
 
     open() {
@@ -82,7 +85,11 @@ class Dashboard {
 
     openStatistics() {
         let statisticsDiv = document.getElementById("statistics");
-        let statisticsSection = document.getElementById("statisticsSection");
+        let statisticsSection = document.getElementById
+        ("statisticsSection");
+
+        toggleDisplayVisibility(statisticsSection, true);
+
         $("html, body").animate({ scrollTop: statisticsSection.offsetTop }, "slow");
 
 
@@ -135,5 +142,7 @@ class Dashboard {
 
     closeStatistics() {
         this.clearStatistics();
+        let statisticsSection = document.getElementById("statisticsSection");
+        toggleDisplayVisibility(statisticsSection, false);
     }
 }

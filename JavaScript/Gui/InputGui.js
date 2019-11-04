@@ -7,6 +7,7 @@ class InputGui {
 
     clear() {
         clearElement(this.inputGuiElement);
+        dashboard.clear();
     }
 
     close() {

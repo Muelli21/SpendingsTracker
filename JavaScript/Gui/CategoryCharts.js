@@ -26,8 +26,6 @@ function printCategoryCharts() {
         countedCategories[spendingCategory.getName()]++;
     }
 
-    console.log(countedCategories);
-
     dataSets.push({
         label: "Number of spendings of this category",
         data: Object.values(countedCategories),
