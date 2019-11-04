@@ -2,6 +2,15 @@
     position: relative;
 }
 
+#home {
+    position: fixed;
+}
+
+.center {
+    position: relative;
+    width: 100vw;
+}
+
 #budgetOverviewDiv {
     position: absolute;
     top: 15vh;
@@ -50,6 +59,7 @@
     align-items: stretch;
     flex-wrap: wrap;
     margin: 2em;    
+    background-color: whitesmoke;
 }
 
 .spendingsTable {

@@ -28,21 +28,21 @@ var spendingCategories = [
         "Food",
         90,
         "./Resources/Food.png",
-        [255, 255, 255]
+        [155, 155, 155]
     ),
 
     new SpendingCategory(
         "Restaurant",
         30,
         "./Resources/Restaurant.png",
-        [255, 255, 255]
+        [155, 155, 155]
     ),
 
     new SpendingCategory(
         "Sport",
         60,
         "./Resources/Sport.png",
-        [255, 255, 255]
+        [155, 155, 155]
     ),
 
     new SpendingCategory(
