@@ -86,12 +86,11 @@ class Dashboard {
     openStatistics() {
         let statisticsDiv = document.getElementById("statistics");
         let statisticsSection = document.getElementById
-        ("statisticsSection");
+            ("statisticsSection");
 
         toggleDisplayVisibility(statisticsSection, true);
 
         $("html, body").animate({ scrollTop: statisticsSection.offsetTop }, "slow");
-
 
         let currentSpendings = this.spendingMonth.getSpendings();
         let spendingsTable = createHTMLElement(statisticsDiv, "table", "spendingsTable");
@@ -108,7 +107,7 @@ class Dashboard {
         spendingsTableHeadline3.innerHTML = "Price";
 
         let spendingsTableHeadline4 = createHTMLElement(spendingsTableRow, "th", "spendingsTableHeadline");
-        spendingsTableHeadline4.innerHTML = monthIndexToString(this.spendingMonth.getMonth() -1);
+        spendingsTableHeadline4.innerHTML = monthIndexToString(this.spendingMonth.getMonth() - 1);
 
         for (let spending of currentSpendings) {
 

@@ -8,23 +8,25 @@ class InputGui {
     clear() {
         clearElement(this.inputGuiElement);
         dashboard.clear();
+        console.log("the input gui has been cleared!")
     }
 
     close() {
-        this.clear();
+        $("#inputGui").scrollTop(0);
         toggleDisplayVisibility(this.inputGuiElement, false);
+        this.clear();
     }
 
     setButton(text, fixedPosition, functionToCall) {
 
         let buttonSection = document.getElementById("buttonSection");
 
-        if(typeof(buttonSection) == 'undefined' || buttonSection == null){
+        if (typeof (buttonSection) == 'undefined' || buttonSection == null) {
             buttonSection = createHTMLElement(this.inputGuiElement, "div", "buttonSection");
             buttonSection.id = "buttonSection";
         }
 
-        if(fixedPosition) {
+        if (fixedPosition) {
             buttonSection.classList.add("fixed");
         } else {
             buttonSection.classList.remove("fixed");
@@ -40,7 +42,6 @@ class InputGui {
         let inputGuiElement = document.getElementById("inputGui");
         let flexContainer = createHTMLElement(inputGuiElement, "div", "flexContainer");
 
-    
         for (let spendingCategory of spendingCategories) {
             let div = createHTMLElement(flexContainer, "div", "categoryDiv one-third");
             let button = createButtonElement(div, spendingCategory.getName() + "Button", "spendingCategoryButton", (function (variable) {
@@ -48,13 +49,13 @@ class InputGui {
                     inputGui.openSpendingInput(variable);
                 };
             })(spendingCategory));
-    
+
             let labelElement = button[1];
-            createHTMLElement(labelElement,"img", "categoryImage").src = spendingCategory.getIconUrl();
+            createHTMLElement(labelElement, "img", "categoryImage").src = spendingCategory.getIconUrl();
             createTextElement(labelElement, spendingCategory.getName(), "categoryText");
         }
 
-        this.setButton("cancel", false, function() {
+        this.setButton("cancel", false, function () {
             inputGui.close();
             dashboard.open();
         });
@@ -69,26 +70,26 @@ class InputGui {
         let inputContainer = createHTMLElement(this.inputGuiElement, "div", "inputContainer");
 
         let imageDiv = createHTMLElement(inputContainer, "div", "spendingInputCategoryDiv");
-        createHTMLElement(imageDiv,"img", "spendingInputImage").src = "./Resources/Icon.png";
+        createHTMLElement(imageDiv, "img", "spendingInputImage").src = "./Resources/Icon.png";
         createTextElement(imageDiv, "Budget", "spendingInputText");
 
         let formDiv = createHTMLElement(inputContainer, "div", "formDiv");
 
-        let budgetInputElement = createHTMLElement(formDiv,"input", "inputGuiInput");
+        let budgetInputElement = createHTMLElement(formDiv, "input", "inputGuiInput");
         budgetInputElement.setAttribute("type", "number");
         budgetInputElement.placeholder = "e.g. 1000";
 
         let errorTextElement = createTextElement(formDiv, "Please fill out the form and press 'submit'!");
 
-        this.setButton("cancel", true, function() {
+        this.setButton("cancel", true, function () {
             inputGui.close();
             dashboard.open();
         });
 
-        this.setButton("submit", true, function() {
-    
+        this.setButton("submit", true, function () {
+
             let budget = budgetInputElement.value;
-    
+
             if (budget == "") {
                 updateTextElement(errorTextElement, "The input field has to be filled out!!!")
                 return;
@@ -98,7 +99,7 @@ class InputGui {
                 console.log("This is not a valid number!");
                 return;
             }
-    
+
             let spendingMonth = dashboard.getSpendingMonth();
             spendingMonth.setBudget(budget);
             console.log("The budget was set to " + budget + " euros!");
@@ -112,35 +113,35 @@ class InputGui {
     openSpendingInput(spendingCategory) {
 
         this.clear();
-        
+
         let inputContainer = createHTMLElement(this.inputGuiElement, "div", "inputContainer");
 
         let imageDiv = createHTMLElement(inputContainer, "div", "spendingInputCategoryDiv");
-        createHTMLElement(imageDiv,"img", "spendingInputImage").src = spendingCategory.getIconUrl();
+        createHTMLElement(imageDiv, "img", "spendingInputImage").src = spendingCategory.getIconUrl();
         createTextElement(imageDiv, spendingCategory.getName(), "inputText");
-    
+
         let formDiv = createHTMLElement(inputContainer, "div", "formDiv");
-        let costInputElement = createHTMLElement(formDiv,"input", "inputGuiInput");
+        let costInputElement = createHTMLElement(formDiv, "input", "inputGuiInput");
         costInputElement.setAttribute("type", "number");
         costInputElement.placeholder = "0";
-    
-        let nameInputElement = createHTMLElement(formDiv,"input", "inputGuiInput");
+
+        let nameInputElement = createHTMLElement(formDiv, "input", "inputGuiInput");
         costInputElement.setAttribute("type", "text");
         nameInputElement.setAttribute("maxlength", 20);
         nameInputElement.placeholder = "name";
 
         let errorTextElement = createTextElement(formDiv, "Please fill out the form and press 'submit'!");
 
-        this.setButton("cancel", true, function() {
+        this.setButton("cancel", true, function () {
             inputGui.close();
             dashboard.open();
         });
 
-        this.setButton("submit", true, function() {
+        this.setButton("submit", true, function () {
 
             let cost = costInputElement.value;
             let name = nameInputElement.value;
-    
+
             if (cost == "" || name == "") {
                 updateTextElement(errorTextElement, "Both input fields have to be filled out!!!")
                 return;
@@ -150,7 +151,7 @@ class InputGui {
                 console.log("This is not a valid number!");
                 return;
             }
-    
+
             let spendingMonth = dashboard.getSpendingMonth();
             let spending = new Spending(spendingCategory, cost, name);
             spendingMonth.addSpending(spending);
@@ -158,7 +159,7 @@ class InputGui {
             inputGui.close();
             dashboard.open();
         });
-        
+
         toggleDisplayVisibility(this.inputGuiElement, true);
     }
 
@@ -169,26 +170,26 @@ class InputGui {
         let inputContainer = createHTMLElement(this.inputGuiElement, "div", "inputContainer");
 
         let imageDiv = createHTMLElement(inputContainer, "div", "spendingInputCategoryDiv");
-        createHTMLElement(imageDiv,"img", "spendingInputImage").src = "./Resources/Icon_2.png";
+        createHTMLElement(imageDiv, "img", "spendingInputImage").src = "./Resources/Icon_2.png";
         createTextElement(imageDiv, "Reset", "inputText");
 
         let formDiv = createHTMLElement(inputContainer, "div", "formDiv");
 
-        let resetInputElement = createHTMLElement(formDiv,"input", "inputGuiInput");
+        let resetInputElement = createHTMLElement(formDiv, "input", "inputGuiInput");
         resetInputElement.setAttribute("type", "text");
         resetInputElement.placeholder = "type 'reset";
 
         let errorTextElement = createTextElement(formDiv, "Please fill out the form and press 'submit'!");
 
-        this.setButton("cancel", true, function() {
+        this.setButton("cancel", true, function () {
             inputGui.close();
             dashboard.open();
         });
 
-        this.setButton("reset", true, function() {
-    
+        this.setButton("reset", true, function () {
+
             let reset = resetInputElement.value;
-    
+
             if (reset == "") {
                 updateTextElement(errorTextElement, "The input field has to be filled out!!!")
                 return;
@@ -198,7 +199,7 @@ class InputGui {
                 console.log("Please confirm the reset by typing in 'reset'!");
                 return;
             }
-    
+
             let spendingMonth = dashboard.getSpendingMonth();
             spendingMonth.setBudget(0);
             spendingMonth.getSpendings().clear();

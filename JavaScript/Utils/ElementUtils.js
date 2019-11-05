@@ -1,5 +1,6 @@
 function clearElement(element) {
     while (element.hasChildNodes()) {
+        console.log(element.firstChild.className);
         element.removeChild(element.firstChild);
     }
 }
