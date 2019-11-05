@@ -47,11 +47,11 @@
     width: 40vw;
     padding: 1em;
     box-shadow: 0px 5px 10px 1px rgba(0,0,0,0.25);
-    transition: 0.5s;
+    transition: 0.1s;
     transition-property: background-color, color;
 }
 
-.statisticsButtonText:hover {
+.statisticsButtonText:active {
     background-color: rgb(219, 219, 219);
     padding: 1em;
 }
@@ -74,8 +74,8 @@
     padding: 2em;    
     background-color: whitesmoke;
     box-shadow: 0px 5px 10px 1px rgba(0,0,0,0.5);
-    border-top-left-radius: 1em;
-    border-top-right-radius: 1em;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
 }
 
 .spendingsTable {
@@ -132,7 +132,7 @@
     transition-property: background-color, color;
 }
 
-.resetButtonText:hover {
+.resetButtonText:active {
     background-color: rgba(255, 113, 94, 0.589);    
     padding: 1em;
 }

@@ -32,4 +32,6 @@ function login() {
     let dashboard = new Dashboard(currentMonth);
     let inputGui = new InputGui(currentMonth);
     dashboard.open();
+
+    preloadImages();
 }
