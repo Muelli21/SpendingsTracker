@@ -8,6 +8,7 @@ class InputGui {
     clear() {
         clearElement(this.inputGuiElement);
         dashboard.clear();
+        dashboard.getDashboardElement().style.overflow = "hidden";
         console.log("the input gui has been cleared!")
     }
 

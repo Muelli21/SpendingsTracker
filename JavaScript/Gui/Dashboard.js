@@ -24,6 +24,7 @@ class Dashboard {
 
         let statisticsSection = document.getElementById("statisticsSection");
         toggleDisplayVisibility(statisticsSection, false);
+        this.dashboardElement.style.overflow = "auto";
     }
 
     open() {
@@ -143,5 +144,9 @@ class Dashboard {
         this.clearStatistics();
         let statisticsSection = document.getElementById("statisticsSection");
         toggleDisplayVisibility(statisticsSection, false);
+    }
+
+    getDashboardElement() {
+        return this.dashboardElement;
     }
 }
