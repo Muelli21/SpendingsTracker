@@ -24,7 +24,6 @@ class Dashboard {
 
         let statisticsSection = document.getElementById("statisticsSection");
         toggleDisplayVisibility(statisticsSection, false);
-        this.dashboardElement.style.overflow = "auto";
     }
 
     open() {
@@ -32,6 +31,9 @@ class Dashboard {
         this.setBudgetOverview();
         this.setSpendingButton();
         this.setStatisticsButton();
+
+        this.dashboardElement.style.overflow = "unset";
+
         console.log("This dashboard depicts information on the following month: " + this.spendingMonth.getMonth() + "/" + this.spendingMonth.getYear());
     }
 
