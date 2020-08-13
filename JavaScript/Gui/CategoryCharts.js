@@ -4,8 +4,8 @@ function printCategoryCharts() {
     let dataSets = [];
     let backgroundColors = [];
     let categoryChartSection = document.getElementById("statistics");
-    let chartDiv = createHTMLElement(categoryChartSection, "div", "categoryChart");
-    let element = createHTMLElement(chartDiv, "canvas", "categoryChartCanvas");
+    let chartDiv = setHTMLElement(categoryChartSection, "div", "categoryChart");
+    let element = setHTMLElement(chartDiv, "canvas", "categoryChartCanvas");
     let htmlElement = element.getContext('2d');
     let parent = element.parentElement;
     parent.style.width = "100%";
@@ -41,7 +41,6 @@ function printCategoryCharts() {
         options: {
             title: {
                 display: true,
-                text: "Spendings per category"
             },
             responsive: true,
             maintainAspectRatio: false,

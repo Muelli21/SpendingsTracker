@@ -1,18 +1,55 @@
 @import url('https://fonts.googleapis.com/css?family=Bubbler+One');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Thambi+2&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
+html {
+    scroll-behavior: smooth;
+}
 
 body {
+    top:0;
+    left:0;
     margin: 0;
     padding: 0;
     text-decoration: none;
-    top:0;
-    left:0;
-    font-family: 'Bubbler One', sans-serif;
-
+    font-family: 'Roboto', sans-serif;
+    
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
-    background-color: whitesmoke;
+    background-color: white;
 }
+
+:root {
+    --light: white;
+    --dark: #191919;
+}
+
+:root {
+    --light: white;
+    --dark: #191919;
+}
+
+.light {
+    --bodyColor: var(--light);
+    --fontColor: var(--dark);
+    --buttonBox: var(--dark);
+    --buttonText: var(--light);
+    --borderColor: var(rgb(44, 44, 44));
+    --sliderColor: rgb(100, 100, 100);
+    --highlighted: rgb(245, 245, 245);
+}
+
+.dark {
+    --bodyColor: var(--dark);
+    --fontColor: var(--light);
+    --buttonBox: var(--dark);
+    --buttonText: var(--light);
+    --borderColor: var(rgb(255, 255, 255));
+    --sliderColor: white;
+    --highlighted: rgb(29, 29, 29);
+}
+
+
 
 
 

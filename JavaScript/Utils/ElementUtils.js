@@ -1,11 +1,19 @@
 function clearElement(element) {
-    while (element.hasChildNodes()) {
-        console.log(element.firstChild.className);
-        element.removeChild(element.firstChild);
+
+    if(element != null) {
+        while (element.hasChildNodes()) {
+            element.removeChild(element.firstChild);
+        }
     }
 }
 
-function createHTMLElement(parentElement, type, className) {
+function createHTMLElement(type, className) {
+    let element = document.createElement(type);
+    element.className = className;
+    return element;
+}
+
+function setHTMLElement(parentElement, type, className) {
     let element = document.createElement(type);
     element.className = className;
     parentElement.appendChild(element);
@@ -104,4 +112,36 @@ function createButtonElement(parentElement, text, className, functionToExecute) 
     element.style.display = "none";
 
     return [element, label];
+}
+
+function createTable(id, className, headingsArray, contentMatrix) {
+
+    let table = document.createElement("table");
+    table.id = id;
+    table.className = className;
+
+    let headingsTableRow = setHTMLElement(table, "tr", className + "HeadingsRow");
+    for (let heading of headingsArray) {
+        let tableHeading = setHTMLElement(headingsTableRow, "th" , className + "Heading")
+        tableHeading.textContent = heading;
+    }
+
+    for (let row of contentMatrix) {
+        let tableRow = setHTMLElement(table, "tr", className + "Row");
+        for(let entry of row) {
+            let tableEntry = setHTMLElement(tableRow, "td", className + "Entry");
+
+            if(isElement(entry)) {
+                tableEntry.appendChild(entry);
+            } else {
+                tableEntry.textContent = entry;
+            }
+        }
+    }
+
+    return table;
+}
+
+function isElement(element) {
+    return element instanceof Element || element instanceof HTMLDocument;  
 }

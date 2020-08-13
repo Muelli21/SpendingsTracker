@@ -9,26 +9,11 @@
     min-width: 100vw;
 }
 
-#inputGui > .flexContainer {
+#inputGui > .gridContainer {
     padding: 1.5em;
-}
 
-.categoryDiv {
-    position: relative;
-    text-align: center;
-    background-color: white;
-    margin: 0.5em;
-    height: auto;
-    border-radius: 1em;
-    box-shadow: 0px 5px 10px 1px rgba(0,0,0,0.25);
-}
-
-.one-third {
-    float: left;
-    height: auto;
-    flex-shrink: 1;
-    flex-grow: 1;
-    min-width: 100px;
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
 }
 
 .categoryImage {
@@ -39,6 +24,15 @@
     margin-top: 1.5em;
 }
 
+.categoryDiv {
+    transition: 500ms;
+    transition-property: transform;
+}
+
+.categoryDiv:hover {
+    transform: scale(1.1);
+}
+
 .spendingInputCategoryDiv {
     position: absolute;
     left: 50%;
@@ -47,7 +41,7 @@
     background-color: white;
     border-radius: 1em;
     width: 50vw;
-    box-shadow: 0px 5px 10px 1px rgba(0,0,0,0.25);
+    box-shadow: 0px 5px 200px 1px rgba(0,0,0,0.25);
 }
 
 .spendingInputImage {
@@ -110,6 +104,7 @@
 .inputGuiInput {
     padding: 1em;
     margin-bottom: 0.5em;
+    border: none;
 }
 
 .flexContainer {
@@ -143,11 +138,7 @@
 }
 
 .buttonSectionButtonText {
-    box-shadow: 0px 5px 10px 1px rgba(0,0,0,0.25);
-}
-
-.buttonSectionButtonText:hover {
-    box-shadow: 0px 5px 5px 1px rgba(0,0,0,0.25);
+    box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.1);
 }
 
 .buttonSectionButtonText:active {

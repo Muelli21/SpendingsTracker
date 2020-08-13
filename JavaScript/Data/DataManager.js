@@ -30,7 +30,7 @@ function loadSpendingMonths() {
 
     request.onsuccess = function () {
         database = request.result;
-        console.log("The connections to the indexedDB database has been established!");
+        console.log("Loading: A connections to the indexedDB database has been established!");
         callbackLoadSpendingMonths(database);
     }
 }
@@ -56,7 +56,7 @@ function saveSpendingMonth(spendingMonth) {
 
     request.onsuccess = function () {
         database = request.result;
-        console.log("The connections to the indexedDB database has been established!");
+        console.log("Saving: A connection to the indexedDB database has been established!");
         callbackSaveSpendingMonth(database, spendingMonth);
     }
 }
@@ -95,7 +95,7 @@ function callbackLoadSpendingMonths(database) {
     }
 
     transaction.oncomplete = function (event) {
-        console.log("A connection to indexedDB has successfully been established!");
+        console.log("Loading callback: A connection to indexedDB has successfully been established!");
         login();
     }
 }
@@ -107,11 +107,12 @@ function callbackSaveSpendingMonth(database, spendingMonth) {
     let objectStore = transaction.objectStore(userName, { keyPath: "key" });
 
     let request = objectStore.put(spendingMonth);
+    
     request.onsuccess = function (event) {
         console.log("The month " + spendingMonth.getMonth() + "/" + spendingMonth.getYear() + " has been saved successfully!");
     }
 
     transaction.oncomplete = function (event) {
-        console.log("A connection to indexedDB has successfully been established!");
+        console.log("Saving callback: A connection to indexedDB has successfully been established!");
     }
 }

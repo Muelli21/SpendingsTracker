@@ -3,54 +3,167 @@
 }
 
 #home {
-    position: fixed;
+    display: grid;
+    grid-template-areas: 
+    "headline"
+    "expenses"
+    "budget"
+    "spendingsButton"
+    "statisticsButton"
+    "statisticsSection";
+
+    grid-gap: 25px;
+    margin-top: 50px;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
-.center {
+.categoryHeadlineDiv {
     position: relative;
-    width: 100vw;
+    text-align: left;
+    grid-area:  categoriesHeadline;
 }
 
-#budgetOverviewDiv {
+.spendingsHeadlineDiv {
+    position: relative;
+    text-align: left;
+    grid-area: spendingsHeadline;
+}
+
+.headline {
+    line-height: 0;
+    font-weight: 300;
+}
+
+.clickMeIconDiv {
+    position: relative;
+    grid-area: clickMeIcon;
+}
+
+.clickMeIcon {
+    width: 30px;
+    height: auto;
+    filter: invert(0.1);
+
     position: absolute;
-    top: 15vh;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color:  white;
-    width: 60vw;
-    text-align: center;
-    box-shadow: 0px 5px 10px 1px rgba(0,0,0,0.25);
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
-#budgetOverviewDiv:hover {
-    box-shadow: 0px 5px 5px 1px rgba(0,0,0,0.25);
+#expensesDiv {
+    background-color:  white;
+    width: 90vw;
+    box-shadow: 0px 5px 200px 1px rgba(0,0,0,0.25);
+    border-radius: 10px;
+
+    grid-area: expenses;
+}
+
+#expensesDiv:hover {
+    box-shadow: 0px 5px 100px 1px rgba(0,0,0,0.25);
+}
+
+.expensesHeadline {
+    position: relative;
+    text-align: left;
+    left: 20px;
+    font-weight: 300;
+    font-size: 20px;
+    grid-area: expensesHeadline;
+
+    line-height: 0;
+    padding-top: 20px;
+}
+
+.expensesMonitor {
+    position: relative;
+    text-align: left;
+    left: 20px;
+    font-weight: 400;
+    grid-area: expensesMonitor;
+
+    line-height: 0;
+    padding-bottom: 20px;
+}
+
+.budgetButton {
+    display: grid;
+    grid-template-areas: 
+    "expensesHeadline clickMeIcon"
+    "expensesMonitor clickMeIcon";    
+    grid-template-columns: 80% 20%;
+}
+
+.budgetHeadline {
+    position: relative;
+    text-align: left;
+    left: 20px;
+    line-height: normal;
+    font-size: 20px;
+    font-weight: 300;
+
+    line-height: 0;
+    padding-top: 20px;
+
+    grid-area: budgetHeadline;
+}
+
+.budgetMonitor {
+    position: relative;
+    text-align: left;
+    left: 20px;
+    font-weight: 400;
+
+    line-height: 0;
+    padding-bottom: 20px;
+    grid-area: budgetMonitor;
+}
+
+#budgetDiv {
+    background-color:  white;
+    text-align: left;
+    box-shadow: 0px 5px 100px 1px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    white-space: pre-line;
+
+    grid-area: budget;
+    display: grid;
+    grid-template-areas: 
+    "budgetHeadline"
+    "budgetMonitor";
 }
 
 #spendingButtonDiv {
-    position: absolute;
-    top: 50vh;
-    left: 50%;
-    transform: translateX(-50%);
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
     background-color: white;
-    width: 100px;
+    width: 75px;
+    height: auto;
     font-size: 30px;
     text-align: center;
-    border-radius: 3em;
+    border-radius: 30px;
+    box-shadow: 0px 5px 50px 1px rgba(0,0,0,0.25);
+}
+
+.spendingButtonText {
+    line-height: 0;
 }
 
 #statisticsButtonDiv {
-    position: absolute;
-    top: 80vh;
-    left: 50%;
-    transform: translateX(-50%);
     text-align: center;
+    grid-area: statisticsButton;
 }
 
 .statisticsButtonText {
     background-color: white;
-    width: 40vw;
     padding: 1em;
-    box-shadow: 0px 5px 10px 1px rgba(0,0,0,0.25);
+    box-shadow: 0px 5px 100px 1px rgba(0,0,0,0.2);
+    border-radius: 3em;
     transition: 0.1s;
     transition-property: background-color, color;
 }
@@ -61,76 +174,76 @@
 }
 
 .statisticsButtonText:hover {
-    box-shadow: 0px 5px 5px 1px rgba(0,0,0,0.25);
+    box-shadow: 0px 5px 100px 1px rgba(0,0,0,0.1);
 }
 
 #statisticsSection {
-    position: absolute;
-    top: 100vh;
     width: 100%;
     display: none;
     z-index: 100;
+    grid-area: statisticsSection;
 }
 
 #statistics {
     position: relative;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: stretch;
-    flex-wrap: wrap;
-    padding: 2em;    
+    display: grid;
+    grid-template-areas: 
+    "spendingsHeadline" 
+    "statisticsTable"
+    "categoriesHeadline"
+    "categoryChart"
+    "resetButton";
+
+    grid-gap: 25px;
+    padding-top: 50px;
+    padding-left: 5%;
+    padding-right: 5%;
+
     background-color: whitesmoke;
     box-shadow: 0px 5px 10px 1px rgba(0,0,0,0.5);
-    border-top-left-radius: 2em;
-    border-top-right-radius: 2em;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
-.spendingsTable {
+.statisticsTable {
     position: relative; 
-    background-color:  white;
+    grid-area: statisticsTable;
+    background-color:  white;    
+    width: 100%;
     padding: 1em;
-    margin-bottom: 1em;
-    min-width: 100px;
-    flex-shrink: 1;
-    flex-grow: 1;
 }
 
 .spendingEntryIcon {
     width: 30px;
 }
 
-.spendingEntry {
-    text-align: left;
-    padding: 2px;
-}
-
-.spendingsTableHeadline {
-    text-align: left;
-    padding: 10px;
-}
-
-.spendingEntryCenter {
+.statisticsTable th, .statisticsTable td {
     text-align: center;
-    padding: 10px;
+    padding: 5px 10px;
+}
+
+.statisticsTable td:first-child, .statisticsTable th:first-child {
+    text-align: left;
+}
+
+.statisticsTable td:last-child, .statisticsTable th:last-child {
+    text-align: right;
 }
 
 .categoryChart {
+    grid-area: categoryChart;
+
     height: 50vh;
     background-color:  white;
-    padding: 1em;
     margin-bottom: 1em;
-    float: left;
-    flex-shrink: 1;
-    flex-grow: 1;
     min-width: 70px;
     width: 0%;
 }
 
 .resetButtonDiv {
     text-align: center;
-    padding: 1em;
     width: 100%;
+    grid-area: resetButton;
 }
 
 .resetButtonText {
@@ -145,7 +258,65 @@
     padding: 1em;
 }
 
+.menuItem {
+    display:inline-block;
+    cursor: pointer;
+    position: absolute;
+    right: 5%;
 
+    z-index: 10000;
+}
 
+#menuItemDiv {
+    grid-area: menuItem;
+}
+  
+.bars {
+    width: 30px;
+    height: 1px;
+    background-color: black;
+    margin: 7.5px;
+    transition: 1s;
+}
+  
+.change #bar1 {
+    -webkit-transform: rotate(-45deg) translateY(8.5px);
+     transform: translateY(8.5px);
+     background-color: black;
+}
+  
+.change #bar2 {
+    opacity: 0;
+}
+  
+.change #bar3 {
+     -webkit-transform: rotate(45deg) translateY(-8.5px);
+     transform: translateY(-8.5px);
+     background-color: black;
+}
 
+.selectionDiv {
+    overflow-x: scroll; 
+    margin-top: 50px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.selectionHeadlineDiv {
+    text-align: left;
+}
+
+.monthsDiv {
+    display: grid;
+    grid-template-rows: min-content;
+    grid-template-columns: 50% 50%;
+    text-align: center;
+}
+
+.monthLink {
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    padding: 5px;
+}
 

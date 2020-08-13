@@ -13,7 +13,14 @@ class InputGui {
     }
 
     close() {
-        $("#inputGui").scrollTop(0);
+        let inputGui = document.getElementById("inputGui");
+
+        window.scrollTo({
+            top: inputGui.offsetTop,
+            left: 0,
+            behavior: 'smooth'
+        });
+
         toggleDisplayVisibility(this.inputGuiElement, false);
         this.clear();
     }
@@ -23,7 +30,7 @@ class InputGui {
         let buttonSection = document.getElementById("buttonSection");
 
         if (typeof (buttonSection) == 'undefined' || buttonSection == null) {
-            buttonSection = createHTMLElement(this.inputGuiElement, "div", "buttonSection");
+            buttonSection = setHTMLElement(this.inputGuiElement, "div", "buttonSection");
             buttonSection.id = "buttonSection";
         }
 
@@ -41,10 +48,10 @@ class InputGui {
         this.clear();
 
         let inputGuiElement = document.getElementById("inputGui");
-        let flexContainer = createHTMLElement(inputGuiElement, "div", "flexContainer");
+        let flexContainer = setHTMLElement(inputGuiElement, "div", "gridContainer");
 
         for (let spendingCategory of spendingCategories) {
-            let div = createHTMLElement(flexContainer, "div", "categoryDiv one-third");
+            let div = setHTMLElement(flexContainer, "div", "categoryDiv");
             let button = createButtonElement(div, spendingCategory.getName() + "Button", "spendingCategoryButton", (function (variable) {
                 return function () {
                     inputGui.openSpendingInput(variable);
@@ -52,7 +59,8 @@ class InputGui {
             })(spendingCategory));
 
             let labelElement = button[1];
-            createHTMLElement(labelElement, "img", "categoryImage").src = spendingCategory.getIconUrl();
+
+            setHTMLElement(labelElement, "img", "categoryImage").src = spendingCategory.getIconUrl();
             createTextElement(labelElement, spendingCategory.getName(), "categoryText");
         }
 
@@ -68,15 +76,15 @@ class InputGui {
 
         this.clear();
 
-        let inputContainer = createHTMLElement(this.inputGuiElement, "div", "inputContainer");
+        let inputContainer = setHTMLElement(this.inputGuiElement, "div", "inputContainer");
+        let imageDiv = setHTMLElement(inputContainer, "div", "spendingInputCategoryDiv");
 
-        let imageDiv = createHTMLElement(inputContainer, "div", "spendingInputCategoryDiv");
-        createHTMLElement(imageDiv, "img", "spendingInputImage").src = "./Resources/Icon.png";
+        setHTMLElement(imageDiv, "img", "spendingInputImage").src = "./Resources/Money.png";
         createTextElement(imageDiv, "Budget", "spendingInputText");
 
-        let formDiv = createHTMLElement(inputContainer, "div", "formDiv");
+        let formDiv = setHTMLElement(inputContainer, "div", "formDiv");
+        let budgetInputElement = setHTMLElement(formDiv, "input", "inputGuiInput");
 
-        let budgetInputElement = createHTMLElement(formDiv, "input", "inputGuiInput");
         budgetInputElement.setAttribute("type", "number");
         budgetInputElement.placeholder = "e.g. 1000";
 
@@ -102,6 +110,7 @@ class InputGui {
             }
 
             let spendingMonth = dashboard.getSpendingMonth();
+
             spendingMonth.setBudget(budget);
             console.log("The budget was set to " + budget + " euros!");
             inputGui.close();
@@ -115,18 +124,20 @@ class InputGui {
 
         this.clear();
 
-        let inputContainer = createHTMLElement(this.inputGuiElement, "div", "inputContainer");
+        let inputContainer = setHTMLElement(this.inputGuiElement, "div", "inputContainer");
+        let imageDiv = setHTMLElement(inputContainer, "div", "spendingInputCategoryDiv");
 
-        let imageDiv = createHTMLElement(inputContainer, "div", "spendingInputCategoryDiv");
-        createHTMLElement(imageDiv, "img", "spendingInputImage").src = spendingCategory.getIconUrl();
+        setHTMLElement(imageDiv, "img", "spendingInputImage").src = spendingCategory.getIconUrl();
         createTextElement(imageDiv, spendingCategory.getName(), "inputText");
 
-        let formDiv = createHTMLElement(inputContainer, "div", "formDiv");
-        let costInputElement = createHTMLElement(formDiv, "input", "inputGuiInput");
+        let formDiv = setHTMLElement(inputContainer, "div", "formDiv");
+        let costInputElement = setHTMLElement(formDiv, "input", "inputGuiInput");
+
         costInputElement.setAttribute("type", "number");
         costInputElement.placeholder = "0";
 
-        let nameInputElement = createHTMLElement(formDiv, "input", "inputGuiInput");
+        let nameInputElement = setHTMLElement(formDiv, "input", "inputGuiInput");
+
         costInputElement.setAttribute("type", "text");
         nameInputElement.setAttribute("maxlength", 20);
         nameInputElement.placeholder = "name";
@@ -155,6 +166,7 @@ class InputGui {
 
             let spendingMonth = dashboard.getSpendingMonth();
             let spending = new Spending(spendingCategory, cost, name);
+
             spendingMonth.addSpending(spending);
             console.log("The spending " + name + " with a cost of " + cost + " was successfully added to the current month");
             inputGui.close();
@@ -168,17 +180,17 @@ class InputGui {
 
         this.clear();
 
-        let inputContainer = createHTMLElement(this.inputGuiElement, "div", "inputContainer");
+        let inputContainer = setHTMLElement(this.inputGuiElement, "div", "inputContainer");
+        let imageDiv = setHTMLElement(inputContainer, "div", "spendingInputCategoryDiv");
 
-        let imageDiv = createHTMLElement(inputContainer, "div", "spendingInputCategoryDiv");
-        createHTMLElement(imageDiv, "img", "spendingInputImage").src = "./Resources/Icon_2.png";
+        setHTMLElement(imageDiv, "img", "spendingInputImage").src = "./Resources/Icon_2.png";
         createTextElement(imageDiv, "Reset", "inputText");
 
-        let formDiv = createHTMLElement(inputContainer, "div", "formDiv");
+        let formDiv = setHTMLElement(inputContainer, "div", "formDiv");
+        let resetInputElement = setHTMLElement(formDiv, "input", "inputGuiInput");
 
-        let resetInputElement = createHTMLElement(formDiv, "input", "inputGuiInput");
         resetInputElement.setAttribute("type", "text");
-        resetInputElement.placeholder = "type 'reset";
+        resetInputElement.placeholder = "type 'reset'";
 
         let errorTextElement = createTextElement(formDiv, "Please fill out the form and press 'submit'!");
 
@@ -202,6 +214,7 @@ class InputGui {
             }
 
             let spendingMonth = dashboard.getSpendingMonth();
+
             spendingMonth.setBudget(0);
             spendingMonth.getSpendings().clear();
             console.log("The current month was resetted!");
