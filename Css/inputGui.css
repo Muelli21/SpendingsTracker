@@ -9,7 +9,7 @@
     min-width: 100vw;
 }
 
-#inputGui > .gridContainer {
+#inputGui > #gridContainer {
     padding: 1.5em;
 
     display: grid;
@@ -137,11 +137,7 @@
     margin-bottom: 1em;
 }
 
-.buttonSectionButtonText {
-    box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.1);
-}
-
-.buttonSectionButtonText:active {
+.buttonSectionButton:active {
     background-color: rgb(219, 219, 219);
 }
 
@@ -149,15 +145,12 @@
     top: 80vh;
 }
 
-.buttonSectionButtonText {
+.buttonSectionButton {
     background-color: white;
     border-radius: 1em;
     min-width: 60px;
     padding: 1em;
     margin: 0.5em;   
-}
 
-.buttonSectionButton {
-    flex-shrink: 1;
-    flex-grow: 1;
+    box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.1);
 }

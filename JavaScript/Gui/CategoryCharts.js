@@ -3,9 +3,10 @@ function printCategoryCharts() {
     let color = new Colors();
     let dataSets = [];
     let backgroundColors = [];
-    let categoryChartSection = document.getElementById("statistics");
-    let chartDiv = setHTMLElement(categoryChartSection, "div", "categoryChart");
-    let element = setHTMLElement(chartDiv, "canvas", "categoryChartCanvas");
+    let categoryChartSection = document.getElementById("statisticsWrapper");
+
+    let chartDiv = setElement(categoryChartSection, "categoryChart", "", "div");
+    let element = setElement(chartDiv, "categoryChartCanvas", "", "canvas");
     let htmlElement = element.getContext('2d');
     let parent = element.parentElement;
     parent.style.width = "100%";

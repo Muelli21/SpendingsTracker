@@ -1,10 +1,11 @@
-let appName = "spendingsTracker";
-let defaultUserName = "Muelli21";
-let appVersion = "1.0";
-let browserSupport = true;
-let allSpendingMonths = [];
-let dashboard;
-let inputGui;
+const APP_NAME = "spendingsTracker";
+const DEFAULT_USERNAME = "Muelli21";
+const APP_VERSION = "1.0";
+
+var browserSupport = true;
+var allSpendingMonths = [];
+var dashboard;
+var inputGui;
 
 window.onload = function() {
     loadSpendingMonths();
@@ -13,6 +14,7 @@ window.onload = function() {
 function login() {
 
     if (!browserSupport) {
+        alert("This browser does not apper to be compatible with this progressive web app!")
         return;
     }
     
@@ -29,9 +31,9 @@ function login() {
         currentMonth = new SpendingMonth(month, year);
     }
 
-    let dashboard = new Dashboard(currentMonth);
-    let inputGui = new InputGui(currentMonth);
-    dashboard.open();
+    dashboard = new Dashboard(currentMonth);
+    inputGui = new InputGui(currentMonth);
+    dashboard.display();
 
     preloadImages();
 }

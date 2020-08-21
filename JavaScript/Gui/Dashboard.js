@@ -1,191 +1,177 @@
-const clickMeIcon = "./Resources/ClickMeIcon.png";
-const clickMeIconFilled = "./Resources/ClickMeIconFilled.png";
+const CLICK_ICON = "./Resources/ClickMeIcon.png";
+const CLICK_ICON_FILLED = "./Resources/ClickMeIconFilled.png";
+const PLUS_ICON_FILLED = "./Resources/PlusIconFilled.png";
 
 
 class Dashboard {
     constructor(spendingMonth) {
+
         this.spendingMonth = spendingMonth;
-        this.dashboardElement = document.getElementById("dashboard");
-        this.statisticsElement = document.getElementById("statistics");
+
         this.displayingStatistics = false;
         this.displayingSelection = false;
-        dashboard = this;
-    }
 
-    getSpendingMonth() {
-        return this.spendingMonth;
     }
 
     clear() {
 
-        let headline = document.getElementById("headline");
-        let expensesDiv = document.getElementById("expensesDiv");
-        let budgetDiv = document.getElementById("budgetDiv");
-        let spendingButtonDiv = document.getElementById("spendingButtonDiv");
-        let statisticsButtonDiv = document.getElementById("statisticsButtonDiv");
-        let statistics = document.getElementById("statistics");
-        let menuItemDiv = document.getElementById("menuItemDiv");
-        let selectionGui = document.getElementById("selectionGui");
-
-        clearElement(headline);
-        clearElement(expensesDiv);
-        clearElement(budgetDiv);
-        clearElement(spendingButtonDiv);
-        clearElement(statisticsButtonDiv);
-        clearElement(statistics);
-        clearElement(menuItemDiv);
-        clearElement(selectionGui);
+        let elementsToClear = document.querySelectorAll(".toClear");
+        for (let element of elementsToClear) {
+            clearElement(element);
+        }
 
         let statisticsSection = document.getElementById("statisticsSection");
         toggleDisplayVisibility(statisticsSection, false);
     }
 
-    open() {
-        this.clear();
-        this.setMenu();
-        this.setHeadline();
-        this.setBudgetOverview();
-        this.setSpendingButton();
-        this.setStatisticsButton();
+    display() {
 
-        this.dashboardElement.style.overflow = "unset";
+        this.clear();
+
+        this.displayHeadline();
+        this.displayHamburgerMenu();
+        this.displayOverview();
+        this.displayButtons();
+
+        let dashboardElement = document.getElementById("dashboard");
+        dashboardElement.style.overflow = "unset";
         this.displayingSelection = false;
 
         console.log("This dashboard depicts information on the following month: " + this.spendingMonth.getMonth() + "/" + this.spendingMonth.getYear());
     }
 
-    setMenu() {
-        let menuItemDiv = document.getElementById("menuItemDiv");
-        let menuItem = setHTMLElement(menuItemDiv, "div", "menuItem");
-        menuItem.id = "menuItem";
-        menuItem.onclick = this.openMenu;
-
-        for (let index = 0; index < 3; index++) {
-            let bar = setHTMLElement(menuItem, "div", "bars");
-            bar.id = "bar" + (index + 1);
-        }
-    }
-
-    openMenu() {
-
-        let selectionGui = document.getElementById("selectionGui");
-        let spendingMonths = allSpendingMonths; 
-        let selectionDiv = setHTMLElement(selectionGui, "div", "selectionDiv");
-
-        document.getElementById('menuItem').classList.toggle("change");
-
-        if(this.displayingSelection) {
-            clearElement(selectionGui);
-            this.displayingSelection = false;
-        } else {
-
-            let selectionHeadline = setHTMLElement(selectionDiv, "div", "selectionHeadlineDiv");
-            createHeadlineElement(selectionHeadline, "Select month", "h1", "headline");
-            let monthsDiv = setHTMLElement(selectionDiv, "div", "monthsDiv")
-
-            for (let spendingMonth of spendingMonths) {
-                let month = spendingMonth.getMonth();
-                let year = spendingMonth.getYear();
-                let name = monthIndexToString(month - 1) + ", " + year;
-    
-                createTextButtonElement(monthsDiv, name, "monthLink", (function (variable) {
-                    return function () {                        
-                        let dashboard = new Dashboard(variable);
-                        dashboard.open();
-                    };
-                })(spendingMonth));
-            }
-
-            this.displayingSelection = true;
-        }
-    }
-
-    setHeadline() {
-
-        let headline = document.getElementById("headline");
+    getHeadlineString() {
 
         let currentSpendingMonth = this.spendingMonth;
         let currentMonth = currentSpendingMonth.getMonth();
         let currentYear = currentSpendingMonth.getYear();
 
         let date = new Date();
+        let isCurrentData = currentYear == date.getFullYear() && currentMonth == date.getMonth() + 1;
+        let archivedHeadline = monthIndexToString(currentMonth - 1) + ", " + currentYear;
+        let headline = isCurrentData ? "This month" : archivedHeadline;
 
-        if (currentYear == date.getFullYear() && currentMonth == date.getMonth() + 1) {
-            createHeadlineElement(headline, "This month", "h1", "headline");
+        return headline;
+    }
 
-        } else {
-            let monthName = monthIndexToString(currentMonth - 1);
-            createHeadlineElement(headline, monthName + ", " + currentYear, "h1", "headline");
+    displayHeadline() {
+
+        let headlineWrapper = document.getElementById("headlineWrapper");
+        let headlineString = this.getHeadlineString();
+
+        setHeadline(headlineWrapper, "headline", "headline", "h1", headlineString);
+
+    }
+
+    displayHamburgerMenu() {
+
+        let hamburgerMenuWrapper = document.getElementById("hamburgerMenuWrapper");
+        let hambugerMenuItem = setElement(hamburgerMenuWrapper, "hambugerMenuItem", "", "div");
+
+        hambugerMenuItem.onclick = this.openMenu;
+
+        for (let index = 0; index < 3; index++) {
+            let bar = setElement(hambugerMenuItem, "", "bars", "div");
+            bar.id = "bar" + (index + 1);
         }
     }
 
-    setBudgetOverview() {
+    openMenu() {
+
+        let spendingMonths = allSpendingMonths;
+
+        document.getElementById('hambugerMenuItem').classList.toggle("change");
+
+        let monthsWrapper = document.getElementById("monthsWrapper");
+        let headline = document.getElementById("headline");
+
+        if (this.displayingSelection) {
+            let headlineString = dashboard.getHeadlineString();
+
+            clearElement(monthsWrapper);
+            headline.textContent = headlineString;
+
+        } else {
+
+            headline.textContent = "Select month";
+
+            for (let spendingMonth of spendingMonths) {
+                let month = spendingMonth.getMonth();
+                let year = spendingMonth.getYear();
+                let name = monthIndexToString(month - 1) + ", " + year;
+
+                setTextButton(monthsWrapper, name, "selectionMonthButton", name, (function (variable) {
+                    return function () {
+                        let dashboard = new Dashboard(variable);
+                        dashboard.display();
+                    };
+                })(spendingMonth));
+            }
+        }
+
+        this.displayingSelection = !this.displayingSelection;
+    }
+
+    displayOverview() {
 
         let expenses = this.spendingMonth.getTotalExpenses();
         let budget = this.spendingMonth.getBudget();
-        let savings = budget - expenses;
+        let remainingBudget = budget - expenses;
 
-        let expensesDiv = document.getElementById("expensesDiv");
-        let budgetButton = createButtonElement(expensesDiv, "budgetButton", "budgetButton", function () {
+        let budgetWrapper = document.getElementById("budgetWrapper");
+        let budgetButton = setButton(budgetWrapper, "budgetButton", "", function () {
             inputGui.openBudgetInput();
         });
 
-        let label = budgetButton[1];
+        setHeadline(budgetButton, "budgetHeadline", "headline", "h2", "Remaining Budget");
+        setHeadline(budgetButton, "budgetMonitor", "monitor", "h2", remainingBudget + "€");
 
-        createHeadlineElement(label, "Expenses", "h2", "expensesHeadline");
-        createHeadlineElement(label, expenses + "€", "h2", "expensesMonitor");
-        let iconDiv = setHTMLElement(label, "div", "clickMeIconDiv");
-        setHTMLElement(iconDiv, "img", "clickMeIcon").src = clickMeIconFilled;
+        let iconWrapper = setElement(budgetButton, "", "clickIconWrapper", "div");
+        setElement(iconWrapper, "", "clickIcon", "img").src = CLICK_ICON_FILLED;
 
-        let budgetDiv = document.getElementById("budgetDiv");
-        createHeadlineElement(budgetDiv, "Remaining Budget", "h2", "budgetHeadline");
-        createHeadlineElement(budgetDiv, savings + "€", "h2", "budgetMonitor")
+        let expensesWrapper = document.getElementById("expensesWrapper");
+        setHeadline(expensesWrapper, "expensesHeadline", "headline", "h2", "Expenses");
+        setHeadline(expensesWrapper, "expensesMonitor", "monitor", "h2", expenses + "€");
     }
 
-    setSpendingButton() {
-        let spendingButtonDiv = document.getElementById("spendingButtonDiv");
+    displayButtons() {
+        let addButtonWrapper = document.getElementById("addButtonWrapper");
+        let statisticsButtonWrapper = document.getElementById("statisticsButtonWrapper");
 
-        createTextButtonElement(spendingButtonDiv, "+", "spendingButton", function () {
+        let addButton = setButton(addButtonWrapper, "addButton", "", function () {
             inputGui.openCategorySelector();
         });
-    }
 
-    setResetButton() {
-        let statisticsDiv = document.getElementById("statistics");
-        let resetButtonDiv = setHTMLElement(statisticsDiv, "div", "resetButtonDiv");
+        setElement(addButton, "", "clickIcon", "img").src = PLUS_ICON_FILLED;
 
-        createTextButtonElement(resetButtonDiv, "reset", "resetButton", function () {
-            inputGui.openResetInput();
-        });
-    }
-
-    setStatisticsButton() {
-        let statisticsButtonDiv = document.getElementById("statisticsButtonDiv");
-        createTextButtonElement(statisticsButtonDiv, "Statistics", "statisticsButton", function () {
-
+        setTextButton(statisticsButtonWrapper, "statisticsButton", "", "statistics", function () {
             if (this.displayingStatistics) {
                 dashboard.closeStatistics();
                 this.displayingStatistics = false;
             } else {
-                dashboard.openStatistics();
+                dashboard.displayStatistics();
                 this.displayingStatistics = true;
             }
         });
     }
 
-    openStatistics() {
-        let statisticsDiv = document.getElementById("statistics");
-        let statisticsSection = document.getElementById
-            ("statisticsSection");
+    displayStatistics() {
 
-        toggleDisplayVisibility(statisticsSection, true);
+        let statisticsSection = document.getElementById("statisticsSection");
 
-        $("html, body").animate({ scrollTop: statisticsSection.offsetTop });
+        let statisticsWrapper = document.getElementById("statisticsWrapper");
+
+        if (!isElement(statisticsWrapper)) {
+            statisticsWrapper = setElement(statisticsSection, "statisticsWrapper", "", "div");
+        }
 
         let currentSpendings = this.spendingMonth.getSpendings();
 
-        let spendingsHeadline = setHTMLElement(statisticsDiv, "div", "spendingsHeadlineDiv");
-        createHeadlineElement(spendingsHeadline, "All Spendings", "h1", "headline");
+        toggleDisplayVisibility(statisticsSection, true);
+        $("html, body").animate({ scrollTop: statisticsSection.offsetTop });
+
+        let spendingsHeadlineWrapper = setElement(statisticsWrapper, "spendingHeadlineWrapper", "headlineWrapper", "div");
+        setHeadline(spendingsHeadlineWrapper, "", "headline", "h1", "All Spendings");
 
         let month = monthIndexToString(this.spendingMonth.getMonth() - 1);
         let headingsArray = ["Category", "Name", "Price", month]
@@ -193,11 +179,11 @@ class Dashboard {
 
         for (let spending of currentSpendings) {
 
-            let spendingCategory = spending.getType();
-            let spendingEntryIcon = createHTMLElement("img", "spendingEntryIcon");
-            spendingEntryIcon.src = spendingCategory.iconURL;
-
             let spendingDate = new Date();
+            let spendingCategory = spending.getType();
+            let spendingEntryIcon = createElement("", "spendingEntryIcon", "img");
+
+            spendingEntryIcon.src = spendingCategory.iconURL;
             spendingDate.setTime(spending.getTimeStamp());
 
             let contentRow = [
@@ -211,26 +197,28 @@ class Dashboard {
         }
 
         let table = createTable("spendingsTable", "statisticsTable", headingsArray, contentMatrix);
-        statisticsDiv.appendChild(table);
+        statisticsWrapper.appendChild(table);
 
-        let categoryHeadline = setHTMLElement(statisticsDiv, "div", "categoryHeadlineDiv");
-        createHeadlineElement(categoryHeadline, "Per category", "h1", "headline");
+        let categoryHeadlineWrapper = setElement(statisticsWrapper, "categoryHeadlineWrapper", "headlineWrapper", "div");
+        setHeadline(categoryHeadlineWrapper, "", "headline", "h1", "Per Category");
 
         printCategoryCharts();
-        this.setResetButton();
-    }
 
-    clearStatistics() {
-        clearElement(this.statisticsElement);
+        let resetButtonWrapper = setElement(statisticsWrapper, "resetButtonWrapper", "", "div");
+        setTextButton(resetButtonWrapper, "resetButton", "", "Reset Data", function () {
+            inputGui.openResetInput();
+        });
     }
 
     closeStatistics() {
-        this.clearStatistics();
+
         let statisticsSection = document.getElementById("statisticsSection");
-        toggleDisplayVisibility(statisticsSection, false);
+
+        clearElement(statisticsSection);
+        toggleVisibilityUsingHeight(statisticsSection, false);
     }
 
-    getDashboardElement() {
-        return this.dashboardElement;
+    getSpendingMonth() {
+        return this.spendingMonth;
     }
 }

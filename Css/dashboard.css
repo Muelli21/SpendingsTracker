@@ -1,14 +1,15 @@
-#dashboard {
-    position: relative;
-}
+/*
+    General Dashboard Styles
+*/
 
 #home {
     display: grid;
     grid-template-areas: 
     "headline"
-    "expenses"
+    "selection"
     "budget"
-    "spendingsButton"
+    "expenses"
+    "addButton"
     "statisticsButton"
     "statisticsSection";
 
@@ -18,29 +19,84 @@
     margin-right: 5%;
 }
 
-.categoryHeadlineDiv {
-    position: relative;
-    text-align: left;
-    grid-area:  categoriesHeadline;
-}
-
-.spendingsHeadlineDiv {
-    position: relative;
-    text-align: left;
-    grid-area: spendingsHeadline;
-}
-
 .headline {
     line-height: 0;
     font-weight: 300;
+    transition: 1s;
 }
 
-.clickMeIconDiv {
+/*
+    Burger Menu
+*/
+
+#hambugerMenuItem {
+    display: inline-block;
+    cursor: pointer;
+    position: absolute;
+    right: 5%;
+    z-index: 10000;
+}
+  
+.bars {
+    width: 30px;
+    height: 1px;
+    background-color: black;
+    margin: 7.5px;
+    transition: 1s;
+}
+  
+.change #bar1 {
+    -webkit-transform: translateY(8.5px) rotate(135deg);
+     transform: translateY(8.5px) rotate(135deg);
+     background-color: black;
+}
+  
+.change #bar2 {
+    -webkit-transform: rotate(225deg);
+    transform: rotate(225deg);
+}
+  
+.change #bar3 {
+     -webkit-transform: translateY(-8.5px) rotate(135deg);
+     transform: translateY(-8.5px) rotate(135deg);
+     background-color: black;
+}
+
+/*
+    SpendingMonth Selection
+*/
+
+#selectionGui {
+    margin-top: 50px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#monthsWrapper {
+    grid-area: selection;
+    display: grid;
+    grid-template-rows: min-content;
+    grid-template-columns: 50% 50%;
+    text-align: center;
+}
+
+.monthLink {
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+/*
+    Overview Section
+*/
+
+.clickIconWrapper {
     position: relative;
-    grid-area: clickMeIcon;
+    grid-area: clickIcon;
 }
 
-.clickMeIcon {
+.clickIcon {
     width: 30px;
     height: auto;
     filter: invert(0.1);
@@ -53,20 +109,25 @@
     bottom: 0;
 }
 
-#expensesDiv {
+#expensesWrapper {
     background-color:  white;
-    width: 90vw;
+    text-align: left;
     box-shadow: 0px 5px 200px 1px rgba(0,0,0,0.25);
     border-radius: 10px;
+    white-space: pre-line;
 
     grid-area: expenses;
+    display: grid;
+    grid-template-areas: 
+    "expensesHeadline"
+    "expensesMonitor";
 }
 
-#expensesDiv:hover {
-    box-shadow: 0px 5px 100px 1px rgba(0,0,0,0.25);
+#expensesWrapper:hover {
+    box-shadow: 0px 5px 100px 1px rgba(0,0,0,0.1);
 }
 
-.expensesHeadline {
+#expensesHeadline {
     position: relative;
     text-align: left;
     left: 20px;
@@ -78,7 +139,7 @@
     padding-top: 20px;
 }
 
-.expensesMonitor {
+#expensesMonitor {
     position: relative;
     text-align: left;
     left: 20px;
@@ -89,15 +150,26 @@
     padding-bottom: 20px;
 }
 
-.budgetButton {
+#budgetWrapper {
+    background-color:  white;
+    text-align: left;
+    box-shadow: 0px 5px 200px 1px rgba(0,0,0,0.25);
+    border-radius: 10px;
+    white-space: pre-line;
+
+    grid-area: budget;
+    display: grid;
+}
+
+#budgetButton {
     display: grid;
     grid-template-areas: 
-    "expensesHeadline clickMeIcon"
-    "expensesMonitor clickMeIcon";    
+    "budgetHeadline clickIcon"
+    "budgetMonitor clickIcon";    
     grid-template-columns: 80% 20%;
 }
 
-.budgetHeadline {
+#budgetHeadline {
     position: relative;
     text-align: left;
     left: 20px;
@@ -111,7 +183,7 @@
     grid-area: budgetHeadline;
 }
 
-.budgetMonitor {
+#budgetMonitor {
     position: relative;
     text-align: left;
     left: 20px;
@@ -122,47 +194,64 @@
     grid-area: budgetMonitor;
 }
 
-#budgetDiv {
-    background-color:  white;
-    text-align: left;
-    box-shadow: 0px 5px 100px 1px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    white-space: pre-line;
-
-    grid-area: budget;
-    display: grid;
-    grid-template-areas: 
-    "budgetHeadline"
-    "budgetMonitor";
-}
-
-#spendingButtonDiv {
+#addButtonWrapper {
     position: fixed;
     bottom: 20px;
-    right: 20px;
+    right: 5%;
 
     background-color: white;
     width: 75px;
-    height: auto;
+    height: 60px;
     font-size: 30px;
     text-align: center;
     border-radius: 30px;
     box-shadow: 0px 5px 50px 1px rgba(0,0,0,0.25);
 }
 
-.spendingButtonText {
-    line-height: 0;
+/*
+    Statistics Section
+*/
+
+#statisticsSection {
+    width: 100%;
+    display: none;
+    z-index: 100;
+    grid-area: statisticsSection;
 }
 
-#statisticsButtonDiv {
+#statisticsWrapper {
+    position: relative;
+    display: grid;
+    grid-template-areas: 
+    "spendingsHeadline" 
+    "statisticsTable"
+    "categoriesHeadline"
+    "categoryChart"
+    "resetButton";
+
+    grid-gap: 25px;
+    padding-top: 50px;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 75px;
+
+    background-color: whitesmoke;
+    box-shadow: 0px 5px 10px 1px rgba(0,0,0,0.5);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#statisticsButtonWrapper {
     text-align: center;
     grid-area: statisticsButton;
+    width: 100%;
 }
 
-.statisticsButtonText {
+#statisticsButton {
+    display: block;
     background-color: white;
     padding: 1em;
-    box-shadow: 0px 5px 100px 1px rgba(0,0,0,0.2);
+    box-shadow: 0px 5px 100px 1px rgba(0,0,0,0.1);
     border-radius: 3em;
     transition: 0.1s;
     transition-property: background-color, color;
@@ -177,32 +266,16 @@
     box-shadow: 0px 5px 100px 1px rgba(0,0,0,0.1);
 }
 
-#statisticsSection {
-    width: 100%;
-    display: none;
-    z-index: 100;
-    grid-area: statisticsSection;
+#spendingHeadlineWrapper {
+    position: relative;
+    text-align: left;
+    grid-area:  spendingsHeadline;
 }
 
-#statistics {
+#categoryHeadlineWrapper {
     position: relative;
-    display: grid;
-    grid-template-areas: 
-    "spendingsHeadline" 
-    "statisticsTable"
-    "categoriesHeadline"
-    "categoryChart"
-    "resetButton";
-
-    grid-gap: 25px;
-    padding-top: 50px;
-    padding-left: 5%;
-    padding-right: 5%;
-
-    background-color: whitesmoke;
-    box-shadow: 0px 5px 10px 1px rgba(0,0,0,0.5);
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    text-align: left;
+    grid-area: categoriesHeadline;
 }
 
 .statisticsTable {
@@ -230,93 +303,42 @@
     text-align: right;
 }
 
-.categoryChart {
+#categoryChart {
     grid-area: categoryChart;
 
     height: 50vh;
     background-color:  white;
     margin-bottom: 1em;
     min-width: 70px;
-    width: 0%;
 }
 
-.resetButtonDiv {
+/*
+    Reset Button
+*/
+
+#resetButtonWrapper {
     text-align: center;
     width: 100%;
     grid-area: resetButton;
 }
 
-.resetButtonText {
+#resetButton {
+    display: block;
     background-color: rgba(255, 111, 92, 0.418);    
     padding: 1em;
     transition: 0.5s;
     transition-property: background-color, color;
+
+    box-shadow: 0px 5px 100px 1px rgba(0,0,0,0.1);
+    border-radius: 3em;
 }
 
-.resetButtonText:active {
+#resetButton:active {
     background-color: rgba(255, 113, 94, 0.589);    
     padding: 1em;
 }
 
-.menuItem {
-    display:inline-block;
-    cursor: pointer;
-    position: absolute;
-    right: 5%;
 
-    z-index: 10000;
-}
 
-#menuItemDiv {
-    grid-area: menuItem;
-}
-  
-.bars {
-    width: 30px;
-    height: 1px;
-    background-color: black;
-    margin: 7.5px;
-    transition: 1s;
-}
-  
-.change #bar1 {
-    -webkit-transform: rotate(-45deg) translateY(8.5px);
-     transform: translateY(8.5px);
-     background-color: black;
-}
-  
-.change #bar2 {
-    opacity: 0;
-}
-  
-.change #bar3 {
-     -webkit-transform: rotate(45deg) translateY(-8.5px);
-     transform: translateY(-8.5px);
-     background-color: black;
-}
 
-.selectionDiv {
-    overflow-x: scroll; 
-    margin-top: 50px;
-    margin-left: 5%;
-    margin-right: 5%;
-}
-
-.selectionHeadlineDiv {
-    text-align: left;
-}
-
-.monthsDiv {
-    display: grid;
-    grid-template-rows: min-content;
-    grid-template-columns: 50% 50%;
-    text-align: center;
-}
-
-.monthLink {
-    background-color: white;
-    color: black;
-    border-radius: 10px;
-    padding: 5px;
-}
 

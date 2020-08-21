@@ -1,8 +1,8 @@
 function loadSpendingMonths() {
 
-    let name = defaultUserName;
-    let userName = defaultUserName;
-    let version = appVersion;
+    let name = DEFAULT_USERNAME;
+    let userName = DEFAULT_USERNAME;
+    let version = APP_VERSION;
 
     if (!window.indexedDB) {
         window.alert("The browser does not support IndexedDB, which will probably cause some inconveniences!");
@@ -37,8 +37,8 @@ function loadSpendingMonths() {
 
 function saveSpendingMonth(spendingMonth) {
 
-    let name = defaultUserName;
-    let version = appVersion;
+    let name = DEFAULT_USERNAME;
+    let version = APP_VERSION;
 
     if (!window.indexedDB) {
         window.alert("The browser does not support IndexedDB, which will probably cause some inconveniences!");
@@ -63,7 +63,7 @@ function saveSpendingMonth(spendingMonth) {
 
 function callbackLoadSpendingMonths(database) {
 
-    let userName = defaultUserName;
+    let userName = DEFAULT_USERNAME;
     let transaction = database.transaction(userName, "readwrite");
 
     let objectStore = transaction.objectStore(userName);
@@ -102,7 +102,7 @@ function callbackLoadSpendingMonths(database) {
 
 function callbackSaveSpendingMonth(database, spendingMonth) {
 
-    let userName = defaultUserName;
+    let userName = DEFAULT_USERNAME;
     let transaction = database.transaction(userName, "readwrite");
     let objectStore = transaction.objectStore(userName, { keyPath: "key" });
 

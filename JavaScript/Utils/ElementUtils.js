@@ -1,118 +1,135 @@
 function clearElement(element) {
 
-    if(element != null) {
+    if (element != null) {
         while (element.hasChildNodes()) {
             element.removeChild(element.firstChild);
         }
     }
 }
 
-function createHTMLElement(type, className) {
+//Functions to create or set any HTML-element
+
+function createElement(id, className, type,) {
     let element = document.createElement(type);
     element.className = className;
+    element.id = id;
     return element;
 }
 
-function setHTMLElement(parentElement, type, className) {
-    let element = document.createElement(type);
-    element.className = className;
+function setElement(parentElement, id, className, type) {
+    let element = createElement(id, className, type);
     parentElement.appendChild(element);
-    return element;
+    return element; 
 }
 
-function createTextElement(parentElement, text, className) {
+//Function to create or set a paragraph-element
+
+function createParagraph(id, className, textContent) {
     let element = document.createElement("p");
-    let elementText = document.createTextNode(text);
     element.className = className;
-    element.appendChild(elementText);
+    element.id = id;
+    element.textContent = textContent;
+    return element;
+}
+
+function setParagraph(parentElement, id, className, textContent) {
+    let element = createParagraph(id, className, textContent);
     parentElement.appendChild(element);
     return element;
 }
 
-function updateTextElement(element, text) {
-    clearElement(element);
-    let elementText = document.createTextNode(text);
-    element.appendChild(elementText);
-}
+//Function to create or set a headline
 
-function createHeadlineElement(parentElement, text, type, className) {
-
-    if (type != "h1" || type != "h2" || type != "h3" || type != "h4") {
-        type = "h1";
-    }
-
+function createHeadline(id, className, type, textContent) {
+    let regularExpression = /h\d+/g;
+    type = regularExpression.test(type) ? type : "h1";
     let element = document.createElement(type);
-    let elementText = document.createTextNode(text);
     element.className = className;
-    element.appendChild(elementText);
+    element.id = id;
+    element.textContent = textContent;
+    return element;
+}
+
+function setHeadline(parentElement, id, className, type, textContent) {
+    let element = createHeadline(id, className, type, textContent)
     parentElement.appendChild(element);
     return element;
 }
 
-function createLinkElement(parentElement, childElement, title, href, className) {
+//Function to create or set a link
+
+function createLink(id, className, title, href) {
     let element = document.createElement("a");
     element.className = className;
-    element.appendChild(childElement);
+    element.id = id;
     element.title = title;
     element.href = href;
+    return element;
+}
+
+function setLink(parentElement, id, className, title, href) {
+    let element = createLink(id, className, title, href);
     parentElement.appendChild(element);
     return element;
 }
 
-function createTextButtonElement(parentElement, text, className, functionToExecute) {
+//Function to create or set a text-button
+
+function createTextButton(id, className, textContent, functionToExecute) {
     let element = document.createElement("input");
     element.type = "button";
-    element.value = text;
+    element.value = textContent;
     element.className = className + "Hidden";
-    element.id = text + "Hidden";
+    element.id = id + "Hidden";
     element.onclick = functionToExecute;
-    parentElement.appendChild(element);
+    element.style.display = "none";
 
     let label = document.createElement("label");
     label.htmlFor = element.id;
+    label.id = id;
     label.className = className;
-    parentElement.appendChild(label);
-    element.style.display = "none";
-    let textElement = createTextElement(label, text, className + "Text");
-
-    return [element, label, textElement];
-}
-
-function createTextButtonElementWithoutFunction(parentElement, text, className) {
-    let element = document.createElement("input");
-    element.type = "button";
-    element.value = text;
-    element.className = className + "Hidden";
-    element.id = text + "Hidden";
-    parentElement.appendChild(element);
-
-    let label = document.createElement("label");
-    label.htmlFor = element.id;
-    label.className = className;
-    parentElement.appendChild(label);
-    element.style.display = "none";
-    let textElement = createTextElement(label, text, className + "Text");
-
-    return [element, label, textElement];
-}
-
-function createButtonElement(parentElement, text, className, functionToExecute) {
-    let element = document.createElement("input");
-    element.type = "button";
-    element.value = text;
-    element.className = className + "Hidden";
-    element.id = text + "Hidden";
-    element.onclick = functionToExecute;
-    parentElement.appendChild(element);
-
-    let label = document.createElement("label");
-    label.htmlFor = element.id;
-    label.className = className;
-    parentElement.appendChild(label);
-    element.style.display = "none";
+    label.textContent = textContent;
 
     return [element, label];
 }
+
+function setTextButton(parentElement, id, className, textContent, functionToExecute) {
+    let element = createTextButton(id, className, textContent, functionToExecute);
+    let button = element[0];
+    let label = element[1];
+    parentElement.appendChild(button);
+    parentElement.appendChild(label);
+    return label;
+}
+
+//Function to create or set a button
+
+function createButton(id, className, functionToExecute) {
+    let element = document.createElement("input");
+    element.type = "button";
+    element.className = className + "Hidden";
+    element.id = id + "Hidden";
+    element.onclick = functionToExecute;
+    element.style.display = "none";
+
+    let label = document.createElement("label");
+    label.htmlFor = element.id;
+    label.className = className;
+    label.id = id;
+
+    return [element, label];
+}
+
+function setButton(parentElement, id, className, functionToExecute) {
+    let element = createButton(id, className, functionToExecute);
+    let button = element[0];
+    let label = element[1];
+    parentElement.appendChild(button);
+    parentElement.appendChild(label);
+    return label;
+}
+
+//Function to create and set a table
 
 function createTable(id, className, headingsArray, contentMatrix) {
 
@@ -120,18 +137,18 @@ function createTable(id, className, headingsArray, contentMatrix) {
     table.id = id;
     table.className = className;
 
-    let headingsTableRow = setHTMLElement(table, "tr", className + "HeadingsRow");
+    let headingsTableRow = setElement(table, "", className + "HeadingsRow", "tr");
     for (let heading of headingsArray) {
-        let tableHeading = setHTMLElement(headingsTableRow, "th" , className + "Heading")
+        let tableHeading = setElement(headingsTableRow, "", className + "Heading", "th")
         tableHeading.textContent = heading;
     }
 
     for (let row of contentMatrix) {
-        let tableRow = setHTMLElement(table, "tr", className + "Row");
-        for(let entry of row) {
-            let tableEntry = setHTMLElement(tableRow, "td", className + "Entry");
+        let tableRow = setElement(table, "", className + "Row", "tr");
+        for (let entry of row) {
+            let tableEntry = setElement(tableRow, "", className + "Entry", "td");
 
-            if(isElement(entry)) {
+            if (isElement(entry)) {
                 tableEntry.appendChild(entry);
             } else {
                 tableEntry.textContent = entry;
@@ -142,6 +159,8 @@ function createTable(id, className, headingsArray, contentMatrix) {
     return table;
 }
 
+//Function to check whether an element is a DOM-element
+
 function isElement(element) {
-    return element instanceof Element || element instanceof HTMLDocument;  
+    return element instanceof Element || element instanceof HTMLDocument;
 }

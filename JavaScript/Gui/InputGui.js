@@ -1,19 +1,22 @@
 class InputGui {
     constructor(spendingMonth) {
         this.spendingMonth = spendingMonth;
-        this.inputGuiElement = document.getElementById("inputGui");
         inputGui = this;
     }
 
     clear() {
-        clearElement(this.inputGuiElement);
+        let inputGuiElement = document.getElementById("inputGui");
+        let dashboardElement = document.getElementById("dashboard");
+
+        clearElement(inputGuiElement);
         dashboard.clear();
-        dashboard.getDashboardElement().style.overflow = "hidden";
+
+        dashboardElement.style.overflow = "hidden";
         console.log("the input gui has been cleared!")
     }
 
     close() {
-        let inputGui = document.getElementById("inputGui");
+        let inputGuiElement = document.getElementById("inputGui");
 
         window.scrollTo({
             top: inputGui.offsetTop,
@@ -21,17 +24,17 @@ class InputGui {
             behavior: 'smooth'
         });
 
-        toggleDisplayVisibility(this.inputGuiElement, false);
+        toggleDisplayVisibility(inputGuiElement, false);
         this.clear();
     }
 
     setButton(text, fixedPosition, functionToCall) {
 
         let buttonSection = document.getElementById("buttonSection");
+        let inputGuiElement = document.getElementById("inputGui");
 
         if (typeof (buttonSection) == 'undefined' || buttonSection == null) {
-            buttonSection = setHTMLElement(this.inputGuiElement, "div", "buttonSection");
-            buttonSection.id = "buttonSection";
+            buttonSection = setElement(inputGuiElement, "buttonSection", "buttonSection", "div");
         }
 
         if (fixedPosition) {
@@ -40,7 +43,7 @@ class InputGui {
             buttonSection.classList.remove("fixed");
         }
 
-        createTextButtonElement(buttonSection, text, "buttonSectionButton", functionToCall);
+        setTextButton(buttonSection, text, "buttonSectionButton", text, functionToCall);
     }
 
     openCategorySelector() {
@@ -48,51 +51,51 @@ class InputGui {
         this.clear();
 
         let inputGuiElement = document.getElementById("inputGui");
-        let flexContainer = setHTMLElement(inputGuiElement, "div", "gridContainer");
+        let container = setElement(inputGuiElement, "gridContainer", "", "div");
 
         for (let spendingCategory of spendingCategories) {
-            let div = setHTMLElement(flexContainer, "div", "categoryDiv");
-            let button = createButtonElement(div, spendingCategory.getName() + "Button", "spendingCategoryButton", (function (variable) {
+
+            let div = setElement(container, "", "categoryDiv", "div");
+            let button = setButton(div, spendingCategory.getName() + "Button", "spendingCategoryButton", (function (variable) {
                 return function () {
                     inputGui.openSpendingInput(variable);
                 };
             })(spendingCategory));
 
-            let labelElement = button[1];
-
-            setHTMLElement(labelElement, "img", "categoryImage").src = spendingCategory.getIconUrl();
-            createTextElement(labelElement, spendingCategory.getName(), "categoryText");
+            setElement(button, "", "categoryImage", "img").src = spendingCategory.getIconUrl();
+            setParagraph(button, "", "categoryText", spendingCategory.getName())
         }
 
         this.setButton("cancel", false, function () {
             inputGui.close();
-            dashboard.open();
+            dashboard.display();
         });
 
-        toggleDisplayVisibility(this.inputGuiElement, true);
+        toggleDisplayVisibility(inputGuiElement, true);
     }
 
     openBudgetInput() {
 
         this.clear();
 
-        let inputContainer = setHTMLElement(this.inputGuiElement, "div", "inputContainer");
-        let imageDiv = setHTMLElement(inputContainer, "div", "spendingInputCategoryDiv");
+        let inputGuiElement = document.getElementById("inputGui");
+        let inputContainer = setElement(inputGuiElement, "", "inputContainer", "div");
+        let imageDiv = setElement(inputContainer, "", "spendingInputCategoryDiv", "div");
 
-        setHTMLElement(imageDiv, "img", "spendingInputImage").src = "./Resources/Money.png";
-        createTextElement(imageDiv, "Budget", "spendingInputText");
+        setElement(imageDiv, "", "spendingInputImage", "img").src = "./Resources/Money.png";
+        setParagraph(imageDiv, "spendingInputText","", "Budget" );
 
-        let formDiv = setHTMLElement(inputContainer, "div", "formDiv");
-        let budgetInputElement = setHTMLElement(formDiv, "input", "inputGuiInput");
-
+        let formDiv = setElement(inputContainer, "", "formDiv", "div");
+        let budgetInputElement = setElement(formDiv, "", "inputGuiInput", "input");
         budgetInputElement.setAttribute("type", "number");
         budgetInputElement.placeholder = "e.g. 1000";
 
-        let errorTextElement = createTextElement(formDiv, "Please fill out the form and press 'submit'!");
+        let errorTextElement = setParagraph(formDiv, "", "", "Please fill out the form!");
 
         this.setButton("cancel", true, function () {
+
             inputGui.close();
-            dashboard.open();
+            dashboard.display();
         });
 
         this.setButton("submit", true, function () {
@@ -100,7 +103,7 @@ class InputGui {
             let budget = budgetInputElement.value;
 
             if (budget == "") {
-                updateTextElement(errorTextElement, "The input field has to be filled out!!!")
+                errorTextElement.textContent = "The input field has to be filled out!!!";
                 return;
             }
 
@@ -114,39 +117,38 @@ class InputGui {
             spendingMonth.setBudget(budget);
             console.log("The budget was set to " + budget + " euros!");
             inputGui.close();
-            dashboard.open();
+            dashboard.display();
         });
 
-        toggleDisplayVisibility(this.inputGuiElement, true);
+        toggleDisplayVisibility(inputGuiElement, true);
     }
 
     openSpendingInput(spendingCategory) {
 
         this.clear();
 
-        let inputContainer = setHTMLElement(this.inputGuiElement, "div", "inputContainer");
-        let imageDiv = setHTMLElement(inputContainer, "div", "spendingInputCategoryDiv");
+        let inputGuiElement = document.getElementById("inputGui");
+        let inputContainer = setElement(inputGuiElement, "", "inputContainer", "div");
+        let imageDiv = setElement(inputContainer, "", "spendingInputCategoryDiv", "div");
 
-        setHTMLElement(imageDiv, "img", "spendingInputImage").src = spendingCategory.getIconUrl();
-        createTextElement(imageDiv, spendingCategory.getName(), "inputText");
+        setElement(imageDiv, "", "spendingInputImage", "img").src = spendingCategory.getIconUrl();
+        setParagraph(imageDiv, "", "inputText", spendingCategory.getName());
 
-        let formDiv = setHTMLElement(inputContainer, "div", "formDiv");
-        let costInputElement = setHTMLElement(formDiv, "input", "inputGuiInput");
-
+        let formDiv = setElement(inputContainer, "", "formDiv", "div");
+        
+        let costInputElement = setElement(formDiv, "", "inputGuiInput", "input");
         costInputElement.setAttribute("type", "number");
         costInputElement.placeholder = "0";
 
-        let nameInputElement = setHTMLElement(formDiv, "input", "inputGuiInput");
-
-        costInputElement.setAttribute("type", "text");
+        let nameInputElement = setElement(formDiv, "", "inputGuiInput", "input");
         nameInputElement.setAttribute("maxlength", 20);
         nameInputElement.placeholder = "name";
 
-        let errorTextElement = createTextElement(formDiv, "Please fill out the form and press 'submit'!");
+        let errorTextElement = setParagraph(formDiv, "", "", "Please fill out the form!");
 
         this.setButton("cancel", true, function () {
             inputGui.close();
-            dashboard.open();
+            dashboard.display();
         });
 
         this.setButton("submit", true, function () {
@@ -155,7 +157,8 @@ class InputGui {
             let name = nameInputElement.value;
 
             if (cost == "" || name == "") {
-                updateTextElement(errorTextElement, "Both input fields have to be filled out!!!")
+
+                errorTextElement.textContent = "Both input fields have to be filled out!!!";
                 return;
             }
 
@@ -170,33 +173,34 @@ class InputGui {
             spendingMonth.addSpending(spending);
             console.log("The spending " + name + " with a cost of " + cost + " was successfully added to the current month");
             inputGui.close();
-            dashboard.open();
+            dashboard.display();
         });
 
-        toggleDisplayVisibility(this.inputGuiElement, true);
+        toggleDisplayVisibility(inputGuiElement, true);
     }
 
     openResetInput() {
 
         this.clear();
 
-        let inputContainer = setHTMLElement(this.inputGuiElement, "div", "inputContainer");
-        let imageDiv = setHTMLElement(inputContainer, "div", "spendingInputCategoryDiv");
+        let inputGuiElement = document.getElementById("inputGui");
+        let inputContainer = setElement(inputGuiElement, "div", "inputContainer");
+        let imageDiv = setElement(inputContainer, "", "spendingInputCategoryDiv", "div");
+        
+        setElement(imageDiv, "", "spendingInputImage", "img").src = "./Resources/Icon_2.png";
+        setParagraph(imageDiv, "", "inputText", "Reset");
 
-        setHTMLElement(imageDiv, "img", "spendingInputImage").src = "./Resources/Icon_2.png";
-        createTextElement(imageDiv, "Reset", "inputText");
+        let formDiv = setElement(inputContainer, "", "formDiv", "div");
 
-        let formDiv = setHTMLElement(inputContainer, "div", "formDiv");
-        let resetInputElement = setHTMLElement(formDiv, "input", "inputGuiInput");
-
+        let resetInputElement = setElement(formDiv, "", "inputGuiInput", "input");
         resetInputElement.setAttribute("type", "text");
         resetInputElement.placeholder = "type 'reset'";
 
-        let errorTextElement = createTextElement(formDiv, "Please fill out the form and press 'submit'!");
+        let errorTextElement = setParagraph(formDiv, "","", "Please fill out the form!");
 
         this.setButton("cancel", true, function () {
             inputGui.close();
-            dashboard.open();
+            dashboard.display();
         });
 
         this.setButton("reset", true, function () {
@@ -204,7 +208,7 @@ class InputGui {
             let reset = resetInputElement.value;
 
             if (reset == "") {
-                updateTextElement(errorTextElement, "The input field has to be filled out!!!")
+                errorTextElement.textContent = "The input field has to be filled out!!!";
                 return;
             }
 
@@ -222,7 +226,7 @@ class InputGui {
             dashboard.open();
         });
 
-        toggleDisplayVisibility(this.inputGuiElement, true);
+        toggleDisplayVisibility(inputGuiElement, true);
     }
 }
 
