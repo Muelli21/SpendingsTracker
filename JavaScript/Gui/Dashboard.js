@@ -144,7 +144,7 @@ class Dashboard {
 
         setElement(addButton, "", "clickIcon", "img").src = PLUS_ICON_FILLED;
 
-        setTextButton(statisticsButtonWrapper, "statisticsButton", "", "statistics", function () {
+        setTextButton(statisticsButtonWrapper, "statisticsButton", "", "Statistics", function () {
             if (this.displayingStatistics) {
                 dashboard.closeStatistics();
                 this.displayingStatistics = false;
@@ -153,24 +153,22 @@ class Dashboard {
                 this.displayingStatistics = true;
             }
         });
+
+        toggleVisibility(addButtonWrapper, true);
     }
 
     displayStatistics() {
 
         let statisticsSection = document.getElementById("statisticsSection");
-
-        let statisticsWrapper = document.getElementById("statisticsWrapper");
-
-        if (!isElement(statisticsWrapper)) {
-            statisticsWrapper = setElement(statisticsSection, "statisticsWrapper", "", "div");
-        }
+        let addButtonWrapper = document.getElementById("addButtonWrapper");
 
         let currentSpendings = this.spendingMonth.getSpendings();
 
+        toggleVisibility(addButtonWrapper, false);
         toggleDisplayVisibility(statisticsSection, true);
         $("html, body").animate({ scrollTop: statisticsSection.offsetTop });
 
-        let spendingsHeadlineWrapper = setElement(statisticsWrapper, "spendingHeadlineWrapper", "headlineWrapper", "div");
+        let spendingsHeadlineWrapper = setElement(statisticsSection, "spendingHeadlineWrapper", "headlineWrapper", "div");
         setHeadline(spendingsHeadlineWrapper, "", "headline", "h1", "All Spendings");
 
         let month = monthIndexToString(this.spendingMonth.getMonth() - 1);
@@ -197,15 +195,20 @@ class Dashboard {
         }
 
         let table = createTable("spendingsTable", "statisticsTable", headingsArray, contentMatrix);
-        statisticsWrapper.appendChild(table);
+        statisticsSection.appendChild(table);
 
-        let categoryHeadlineWrapper = setElement(statisticsWrapper, "categoryHeadlineWrapper", "headlineWrapper", "div");
-        setHeadline(categoryHeadlineWrapper, "", "headline", "h1", "Per Category");
+        let categoryNumberHeadlineWrapper = setElement(statisticsSection, "categoryNumberHeadlineWrapper", "headlineWrapper", "div");
+        setHeadline(categoryNumberHeadlineWrapper, "", "headline", "h1", "By number");
 
-        printCategoryCharts();
+        printCategoryChartByNumber();
 
-        let resetButtonWrapper = setElement(statisticsWrapper, "resetButtonWrapper", "", "div");
-        setTextButton(resetButtonWrapper, "resetButton", "", "Reset Data", function () {
+        let categorySumHeadlineWrapper = setElement(statisticsSection, "categorySumHeadlineWrapper", "headlineWrapper", "div");
+        setHeadline(categorySumHeadlineWrapper, "", "headline", "h1", "By sum");
+
+        printCategoryChartBySum();
+
+        let resetButtonWrapper = setElement(statisticsSection, "resetButtonWrapper", "", "div");
+        setTextButton(resetButtonWrapper, "resetButton", "", "Reset", function () {
             inputGui.openResetInput();
         });
     }
@@ -213,8 +216,10 @@ class Dashboard {
     closeStatistics() {
 
         let statisticsSection = document.getElementById("statisticsSection");
+        let addButtonWrapper = document.getElementById("addButtonWrapper");
 
         clearElement(statisticsSection);
+        toggleVisibility(addButtonWrapper, true);
         toggleVisibilityUsingHeight(statisticsSection, false);
     }
 

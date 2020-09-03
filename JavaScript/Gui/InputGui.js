@@ -90,7 +90,7 @@ class InputGui {
         budgetInputElement.setAttribute("type", "number");
         budgetInputElement.placeholder = "e.g. 1000";
 
-        let errorTextElement = setParagraph(formDiv, "", "", "Please fill out the form!");
+        let errorTextElement = setParagraph(formDiv, "", "", "");
 
         this.setButton("cancel", true, function () {
 
@@ -144,7 +144,7 @@ class InputGui {
         nameInputElement.setAttribute("maxlength", 20);
         nameInputElement.placeholder = "name";
 
-        let errorTextElement = setParagraph(formDiv, "", "", "Please fill out the form!");
+        let errorTextElement = setParagraph(formDiv, "", "", "");
 
         this.setButton("cancel", true, function () {
             inputGui.close();
@@ -196,7 +196,7 @@ class InputGui {
         resetInputElement.setAttribute("type", "text");
         resetInputElement.placeholder = "type 'reset'";
 
-        let errorTextElement = setParagraph(formDiv, "","", "Please fill out the form!");
+        let errorTextElement = setParagraph(formDiv, "","", "");
 
         this.setButton("cancel", true, function () {
             inputGui.close();

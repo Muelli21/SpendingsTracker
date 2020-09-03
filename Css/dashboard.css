@@ -13,14 +13,17 @@
     "statisticsButton"
     "statisticsSection";
 
-    grid-gap: 25px;
-    margin-top: 50px;
-    margin-left: 5%;
-    margin-right: 5%;
+    grid-gap: calc(var(--dashboard_margin_vertical)/2);
+    margin-top: var(--dashboard_margin_vertical);
+    margin-left: var(--dashboard_margin_horizontal);
+    margin-right: var(--dashboard_margin_horizontal);
+}
+
+#headline {
+    line-height: 0;
 }
 
 .headline {
-    line-height: 0;
     font-weight: 300;
     transition: 1s;
 }
@@ -66,25 +69,12 @@
     SpendingMonth Selection
 */
 
-#selectionGui {
-    margin-top: 50px;
-    margin-left: 5%;
-    margin-right: 5%;
-}
-
 #monthsWrapper {
     grid-area: selection;
     display: grid;
     grid-template-rows: min-content;
     grid-template-columns: 50% 50%;
     text-align: center;
-}
-
-.monthLink {
-    background-color: white;
-    color: black;
-    border-radius: 10px;
-    padding: 5px;
 }
 
 /*
@@ -97,7 +87,7 @@
 }
 
 .clickIcon {
-    width: 30px;
+    width: var(--icon_size);
     height: auto;
     filter: invert(0.1);
 
@@ -109,56 +99,19 @@
     bottom: 0;
 }
 
-#expensesWrapper {
-    background-color:  white;
-    text-align: left;
-    box-shadow: 0px 5px 200px 1px rgba(0,0,0,0.25);
-    border-radius: 10px;
-    white-space: pre-line;
-
-    grid-area: expenses;
-    display: grid;
-    grid-template-areas: 
-    "expensesHeadline"
-    "expensesMonitor";
-}
-
-#expensesWrapper:hover {
-    box-shadow: 0px 5px 100px 1px rgba(0,0,0,0.1);
-}
-
-#expensesHeadline {
-    position: relative;
-    text-align: left;
-    left: 20px;
-    font-weight: 300;
-    font-size: 20px;
-    grid-area: expensesHeadline;
-
-    line-height: 0;
-    padding-top: 20px;
-}
-
-#expensesMonitor {
-    position: relative;
-    text-align: left;
-    left: 20px;
-    font-weight: 400;
-    grid-area: expensesMonitor;
-
-    line-height: 0;
-    padding-bottom: 20px;
-}
-
 #budgetWrapper {
-    background-color:  white;
+    background-color: var(--primary_element);
+    border: var(--border);
+    border-radius: var(--border_radius);
     text-align: left;
-    box-shadow: 0px 5px 200px 1px rgba(0,0,0,0.25);
-    border-radius: 10px;
     white-space: pre-line;
 
     grid-area: budget;
     display: grid;
+}
+
+#budgetWrapper:hover {
+    box-shadow: var(--box_shadow_hover);
 }
 
 #budgetButton {
@@ -172,76 +125,84 @@
 #budgetHeadline {
     position: relative;
     text-align: left;
-    left: 20px;
-    line-height: normal;
-    font-size: 20px;
-    font-weight: 300;
-
+    left: var(--dashboard_margin_horizontal);
+    font-size: var(--headline_font_size);
+    font-weight: var(--primary_headline_font_weight);
+    
     line-height: 0;
-    padding-top: 20px;
-
+    padding-top: var(--dashboard_margin_horizontal);
     grid-area: budgetHeadline;
 }
 
 #budgetMonitor {
     position: relative;
     text-align: left;
-    left: 20px;
-    font-weight: 400;
+    left: var(--dashboard_margin_horizontal);
+    font-weight: var(--secondary_headline_font_weight);
 
     line-height: 0;
-    padding-bottom: 20px;
+    padding-bottom: var(--dashboard_margin_horizontal);
     grid-area: budgetMonitor;
+}
+
+#expensesWrapper {
+    background-color: var(--primary_element);
+    border: var(--border);
+    border-radius: var(--border_radius);
+    white-space: pre-line;
+    text-align: left;
+
+    grid-area: expenses;
+    display: grid;
+    grid-template-areas: 
+    "expensesHeadline"
+    "expensesMonitor";
+}
+
+#expensesHeadline {
+    position: relative;
+    left: var(--dashboard_margin_horizontal);
+    padding-top: var(--dashboard_margin_horizontal);
+
+    text-align: left;
+    line-height: 0;
+    font-weight: var(--primary_headline_font_weight);
+    font-size: var(--headline_font_size);
+    
+    grid-area: expensesHeadline;
+}
+
+#expensesMonitor {
+    position: relative;
+    left: 20px;
+    padding-bottom: var(--dashboard_margin_horizontal);
+
+    text-align: left;
+    font-weight: var(--secondary_headline_font_weight);
+    grid-area: expensesMonitor;
+
+    line-height: 0;
 }
 
 #addButtonWrapper {
     position: fixed;
-    bottom: 20px;
-    right: 5%;
+    bottom: var(--dashboard_margin_horizontal);
+    right: var(--dashboard_margin_horizontal);
 
-    background-color: white;
-    width: 75px;
-    height: 60px;
-    font-size: 30px;
-    text-align: center;
-    border-radius: 30px;
-    box-shadow: 0px 5px 50px 1px rgba(0,0,0,0.25);
+    background-color: var(--primary_element);
+    width: var(--add_button_size);
+    height: var(--add_button_size);
+    border-radius: var(--border_radius);
+    border: var(--border);
+}
+
+#addButtonWrapper:hover {
+    box-shadow: var(--box_shadow_hover);
 }
 
 /*
     Statistics Section
 */
-
-#statisticsSection {
-    width: 100%;
-    display: none;
-    z-index: 100;
-    grid-area: statisticsSection;
-}
-
-#statisticsWrapper {
-    position: relative;
-    display: grid;
-    grid-template-areas: 
-    "spendingsHeadline" 
-    "statisticsTable"
-    "categoriesHeadline"
-    "categoryChart"
-    "resetButton";
-
-    grid-gap: 25px;
-    padding-top: 50px;
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-bottom: 75px;
-
-    background-color: whitesmoke;
-    box-shadow: 0px 5px 10px 1px rgba(0,0,0,0.5);
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-
-    max-width: 100%;
-}
 
 #statisticsButtonWrapper {
     text-align: center;
@@ -251,67 +212,64 @@
 
 #statisticsButton {
     display: block;
-    background-color: white;
-    padding: 1em;
-    box-shadow: 0px 5px 100px 1px rgba(0,0,0,0.1);
-    border-radius: 3em;
-    transition: 0.1s;
-    transition-property: background-color, color;
+    background-color: var(--primary_element);
+    padding: var(--statistics_button_padding);
+
+    border: var(--border);
+    border-radius: var(--border_radius);
 }
 
-.statisticsButtonText:active {
-    background-color: rgb(219, 219, 219);
-    padding: 1em;
+#statisticsButton:hover {
+    box-shadow: var(--box_shadow_hover);
 }
 
-.statisticsButtonText:hover {
-    box-shadow: 0px 5px 100px 1px rgba(0,0,0,0.1);
+#statisticsSection {
+    display: none;
+    grid-area: statisticsSection;
+    
+    background-color: var(--background_color);
+    padding-top: var(--statistics_margin_vertical);
+    padding-left: var(--statistics_margin_horizontal);
+    padding-right: var(--statistics_margin_horizontal);
+    z-index: 1000;
 }
 
 #spendingHeadlineWrapper {
     position: relative;
     text-align: left;
-    grid-area:  spendingsHeadline;
 }
 
 #categoryHeadlineWrapper {
     position: relative;
     text-align: left;
-    grid-area: categoriesHeadline;
 }
 
 .statisticsTable {
-    position: relative; 
-    grid-area: statisticsTable;
-    background-color:  white;    
     width: 100%;
-    padding: 1em;
+    background-color:  var(--primary_element);  
+    border: var(--border);
+    border-radius: var(--border_radius);
+    margin: auto;
+    padding-top: var(--statistics_margin_horizontal);
+    padding-bottom: var(--statistics_margin_horizontal);
 }
 
 .spendingEntryIcon {
-    width: 30px;
+    width: var(--spending_entry_icon_size);
 }
 
 .statisticsTable th, .statisticsTable td {
     text-align: center;
-    padding: 5px 10px;
-}
-
-.statisticsTable td:first-child, .statisticsTable th:first-child {
-    text-align: left;
-}
-
-.statisticsTable td:last-child, .statisticsTable th:last-child {
-    text-align: right;
+    padding-top: 5px;
 }
 
 #categoryChart {
-    grid-area: categoryChart;
-
     height: 50vh;
-    background-color:  white;
     margin-bottom: 1em;
     min-width: 70px;
+    background-color:  var(--primary_element);  
+    border: var(--border);
+    border-radius: var(--border_radius);
 }
 
 /*
@@ -321,23 +279,15 @@
 #resetButtonWrapper {
     text-align: center;
     width: 100%;
-    grid-area: resetButton;
+    margin-bottom: 75px;
 }
 
 #resetButton {
     display: block;
-    background-color: rgba(255, 111, 92, 0.418);    
-    padding: 1em;
-    transition: 0.5s;
-    transition-property: background-color, color;
-
-    box-shadow: 0px 5px 100px 1px rgba(0,0,0,0.1);
-    border-radius: 3em;
-}
-
-#resetButton:active {
-    background-color: rgba(255, 113, 94, 0.589);    
-    padding: 1em;
+    padding: var(--statistics_button_padding);
+    background-color: var(--primary_element);    
+    border-radius: var(--border_radius);
+    border: 0.5px solid rgba(255, 111, 92, 0.418);
 }
 
 

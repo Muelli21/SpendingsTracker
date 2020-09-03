@@ -16,17 +16,43 @@ body {
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
-    background-color: white;
+    background-color: var(--background_color);
 }
 
 :root {
     --light: white;
     --dark: #191919;
-}
 
-:root {
-    --light: white;
-    --dark: #191919;
+    /* Color */
+    --background_color: white;
+    --primary_element: rgb(254, 254, 254);
+
+    /* Border */
+    --border_color: #e0e0e0;
+    --border_radius: 10px;
+    --border: 0.5px solid var(--border_color);
+    --box_shadow_hover: 0px 0px 1px 1px rgba(0,0,0,0.1);
+
+    /* Dashboard */
+    --dashboard_margin_vertical: 50px;
+    --dashboard_margin_horizontal: 20px;
+    --icon_size: 30px;
+
+    /* Headline */
+    --headline_font_size: 20px;    
+    --primary_headline_font_weight: 300;
+    --secondary_headline_font_weight: 500;
+
+    /* Statistics */
+    --add_button_size: 65px;
+    --statistics_button_padding: 15px;
+    --statistics_margin_vertical: 50px;
+    --statistics_margin_horizontal: 20px;
+    --spending_entry_icon_size: 30px;
+
+    /* Input Gui */
+    --category_image_size: 30px;
+    --category_image_margin_vertical: 20px;
 }
 
 .light {
