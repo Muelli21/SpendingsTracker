@@ -86,9 +86,6 @@
     margin-bottom: var(--dashboard_margin_horizontal);
     margin-left: var(--dashboard_margin_horizontal);
     margin-right: var(--dashboard_margin_horizontal);
-
-    border: var(--border);
-    border-radius: var(--border_radius);
     background-color: var(--background_color);
 }
 
