@@ -1,7 +1,8 @@
 const CLICK_ICON = "./Resources/ClickMeIcon.png";
 const CLICK_ICON_FILLED = "./Resources/ClickMeIconFilled.png";
 const PLUS_ICON_FILLED = "./Resources/PlusIconFilled.png";
-
+const MONEY_ICON = "./Resources/Money.png";
+const RESET_ICON = "./Resources/Icon_2.png";
 
 class Dashboard {
     constructor(spendingMonth) {

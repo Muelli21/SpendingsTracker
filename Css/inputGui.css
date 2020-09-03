@@ -87,6 +87,8 @@
     margin-left: var(--dashboard_margin_horizontal);
     margin-right: var(--dashboard_margin_horizontal);
     background-color: var(--background_color);
+    border: none;
+    box-shadow: var(--box_shadow_hover);
 }
 
 .buttonSection {
@@ -96,7 +98,7 @@
     justify-content: center;
     align-items: stretch;
     flex-wrap: wrap;
-    margin-bottom: 1em;
+    margin-bottom: 75px;
     margin-left: var(--dashboard_margin_horizontal);
     margin-right: var(--dashboard_margin_horizontal);
 }

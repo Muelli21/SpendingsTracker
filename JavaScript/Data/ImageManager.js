@@ -4,6 +4,12 @@ function preloadImages() {
         let url = spendingCategory.getIconUrl();
         preloadImage(url);
     }
+
+    preloadImage(CLICK_ICON);
+    preloadImage(CLICK_ICON_FILLED);
+    preloadImage(PLUS_ICON_FILLED);
+    preloadImage(MONEY_ICON);
+    preloadImage(RESET_ICON);
 }
 
 
