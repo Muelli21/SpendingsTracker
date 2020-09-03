@@ -223,7 +223,7 @@ class InputGui {
             spendingMonth.getSpendings().clear();
             console.log("The current month was resetted!");
             inputGui.close();
-            dashboard.open();
+            dashboard.display();
         });
 
         toggleDisplayVisibility(inputGuiElement, true);
